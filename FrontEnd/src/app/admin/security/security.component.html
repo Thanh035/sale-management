@@ -1,0 +1,73 @@
+<div class="page-wrapper">
+  <div class="container">
+
+    <div class="row">
+      <div class="">
+        <div class="panel panel-default row">
+          <div class="panel-heading col">
+            <h3 class="panel-title">Đổi mật khẩu</h3>
+          </div>
+          <div class="panel-body col">
+            <h4 class="ui-form-change-heading">Thay đổi mật khẩu của bạn</h4>
+            <button (click)="changePassword()" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalpassword">Đổi mật khẩu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row" *ngIf="securityInfo">
+      <div class="">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Vai trò</h3>
+          </div>
+          <div class="panel-body">
+            <ul class="list-group" *ngFor="let role of securityInfo.roles">
+              <li class="list-group-item">{{ role }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="ui-annotated-section__title">
+            <h2 class="ui-heading">Lịch sử đăng nhập</h2>
+            <p class="ui-heading-note">Lịch sử đăng nhập gần đây, bao gồm trình duyệt, ngày tháng và địa chỉ IP</p>
+          </div>
+        </div>
+        <div class="panel-body" *ngIf="securityInfo?.loginHistories">
+          <div class="ui-main wrapper-content">
+            <div class="ui-main-section pd-all-20">
+              <div class="ui-table-container">
+                <table class="table table-striped" id="lastlogin_table">
+                  <thead>
+                    <tr>
+                      <th>Ngày đăng nhập</th>
+                      <th>Browser</th>
+                      <th>IP</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let loginHistory of securityInfo?.loginHistories?.reverse()?.slice(0, 5)">
+                      <td class="last_signIn_0">{{ loginHistory.signInAt | amLocale: 'vi' | amTimeAgo }}</td>
+                      <td>{{ loginHistory.signInBrowser ? displayBrowser(loginHistory.signInBrowser) : "Chua dang nhap" }}</td>
+                      <td>
+                        <a [href]="'//geoiptool.com/en/?ip=' + loginHistory?.signInIp" target="_blank" rel="noopener noreferrer">
+                          {{loginHistory.signInIp}}
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

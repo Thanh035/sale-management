@@ -1,0 +1,61 @@
+<form *ngIf="productId && productName" name="deleteForm" (ngSubmit)="confirmDelete(productId)">
+  <div class="modal-header">
+    <h4 class="modal-title">Xóa sản phẩm</h4>
+
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <app-alert-error></app-alert-error>
+
+    <p>
+      Bạn có muốn xóa sản phẩm <strong class="text-danger">
+        &nbsp;
+        {{ productName }}
+      </strong>?
+    </p>
+
+    <p>
+      Sản phẩm đã xóa không thể phục hồi lại được
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <span>Hủy</span>
+    </button>
+
+    <button type="submit" class="btn btn-danger">
+      <span>Xóa</span>
+    </button>
+  </div>
+
+</form>
+
+
+<form *ngIf="products" name="deleteForm">
+  <div class="modal-header">
+    <h4 class="modal-title">Xóa những sản phẩm đã chọn</h4>
+
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <app-alert-error></app-alert-error>
+
+    <p>
+      Sản phẩm này sẽ được xóa khỏi website vĩnh viễn, bạn chắc chắn muốn xóa những sản phẩm này?
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <span>Hủy</span>
+    </button>
+
+    <button type="submit" class="btn btn-danger" (click)="deleteProducts()">
+      <span>Xóa sản phẩm</span>
+    </button>
+  </div>
+</form>
+

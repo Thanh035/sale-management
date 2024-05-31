@@ -1,0 +1,22 @@
+<div *ngIf="login">
+  <router-outlet></router-outlet>
+</div>
+
+<div *ngIf="isAdmin">
+  <div class="main-wrapper">
+    <app-header-admin></app-header-admin>
+    <app-navbar-admin name="navbar"></app-navbar-admin>
+    <router-outlet></router-outlet>
+  </div>
+</div>
+
+<div *ngIf="isWeb">
+  <app-navbar></app-navbar>
+  <app-header></app-header>
+   <router-outlet></router-outlet>
+  <app-footer></app-footer>
+</div>
+
+
+
+

@@ -1,0 +1,87 @@
+<div class="modal-header">
+  <h5 class="modal-title" data-gtm-vis-recent-on-screen12958095_1557="5361036" data-gtm-vis-first-on-screen12958095_1557="5361036" data-gtm-vis-total-visible-time12958095_1557="100" data-gtm-vis-has-fired12958095_1557="1">Tạo địa chỉ mới</h5>
+  <div class="d-flex">
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+</div>
+
+<div class="modal-body">
+  <div style="padding: 20px 20px 0px;">
+    <div class="form-group mb20">
+      <div class="row">
+        <div class="col-sm-6 col-12">
+          <label class="label-input-group">Họ và tên</label>
+          <input autocomplete="on" type="text" class="next-input" placeholder="Nhập họ và tên" step="1" value="">
+        </div>
+        <div class="col-sm-6 col-12">
+          <label class="label-input-group">Công ty</label>
+          <div class="">
+            <input autocomplete="on" type="text" class="next-input" placeholder="Nhập tên công ty" step="1" value="">
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="ui-information-body">
+      <div class="form-group px-0 pb-0">
+        <div class="row">
+          <div class="col-sm-6 col-12">
+            <label class="label-input-group">Địa chỉ</label>
+            <div class="">
+              <input autocomplete="on" type="text" class="next-input" placeholder="Nhập địa chỉ" step="1" value="">
+            </div>
+          </div>
+          <div class="col-sm-6 col-12">
+            <label class="label-input-group">Số điện thoại</label>
+            <div class="">
+              <input autocomplete="on" type="text" class="next-input" placeholder="Nhập số điện thoại" step="1" value="">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group px-0 pb-0">
+        <div class="row">
+          <div class="col-sm-6 col-12 pt-16">
+            <label>Quốc gia</label>
+              <select class="form-control" disabled>
+                <option disabled hidden>Chọn quốc gia</option>
+                <option value="VN" selected>Vietnam</option>
+              </select>
+          </div>
+          <div class="col-sm-6 col-12 pt-16">
+            <label>Tỉnh/Thành phố</label>
+            <select class="form-control">
+              <option disabled selected hidden>Chọn Tỉnh/Thành phố</option>
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 col-12 pt-16">
+            <label>Quận/Huyện</label>
+                    <select class="form-control">
+                      <option disabled selected hidden>Chọn Quận/Huyện</option>
+                    </select>
+          </div>
+          <div class="col-sm-6 col-12 pt-16">
+            <label class="label-input-group text-left">Phường/ Xã</label>
+            <select class="form-control">
+              <option disabled selected hidden>Chọn Phường/ Xã</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <div class="col-auto 1 one-row">
+    <div class="d-flex justify-content-between align-items-center">
+      <div></div>
+      <div>
+        <button class="btn btn-secondary" (click)="cancel()">Hủy</button>
+        <button class="btn btn-primary">Lưu</button>
+      </div>
+    </div>
+  </div>
+</div>
