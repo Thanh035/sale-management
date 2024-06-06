@@ -3,36 +3,6 @@ Sales management system
  
 - Hanoi, 3/2024 -
 
-
-Table of Contents
-
-Acknowledgement	1
-1 Problem Definition	2
-1.1 Problem abstraction	2
-1.2 The current system	3
-1.3 The proposed system	5
-2 Customer Requirements Specification	6
-3 System Designs	8
-3.1 Entity Relationship Diagram	8
-3.2 Database Design	9
-3.3 Sitemap	9
-3.4 System functions design	10
-4 Task Sheet	12
-5 Validation Checklists	13
-Acknowledgement
-
-First and foremost, we would like to thank my supervisors, teacher Nguyen Ngoc Duy. Without his assistance and dedicated involvement in every step throughout the process, this project could have never been accomplished. I am extremely grateful to you for supporting and understanding my team during the past time. We have well provided and imparted all the necessary and highly valuable professional knowledge by teacher Duy to complete our project.
-Next, we would like to express our deepest gratitude to Aptech Center for creating the opportunity for us to apply the knowledge we have learned and accumulate more practical and valuable experience through this project, which will help us a lot in finding work in the future. The project is where we can summarize the knowledge of a semester and have the opportunity to work together.
-Problem Definition
-Problem abstraction
-Project Introduction
-	Project Name: Sales Management System
-	Project Code: 
-	Group III
-	Group Member: 
-		Pho Duc Binh An - Student1379091
-		Phung Quanh Thanh - Student1335177
-		Chu Sy Thach - Student1342716
 Project’s goal
 The Sales Management System is a software developed to assist businesses in managing the sales process from order intake, transaction processing, to report generation and business performance analysis.
 Efficient sales management is a decisive factor in a business's success. However, traditional sales management methods often have limitations, such as low efficiency, confusion, and the demand for significant human resources and capabilities.
