@@ -25,7 +25,6 @@ import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "tbl_collection")
 public class Collection extends AbstractAuditingEntity<Integer> implements Serializable {

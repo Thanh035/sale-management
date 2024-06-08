@@ -11,7 +11,6 @@ import java.math.BigDecimal;
 
 @Getter
 @Setter
-@ToString
 @Entity
 @Table(name = "tbl_order_detail")
 public class OrderDetail extends AbstractAuditingEntity<Long> implements Serializable {
