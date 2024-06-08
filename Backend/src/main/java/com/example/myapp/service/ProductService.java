@@ -214,6 +214,7 @@ public class ProductService {
         });
 
         productRepository.findById(productId).ifPresent(product -> {
+            product.getOrderDetails().forEach(orderDetail -> orderDetail.setProduct(null));
             productRepository.delete(product);
             log.debug("Deleted Product: {}", product);
         });
