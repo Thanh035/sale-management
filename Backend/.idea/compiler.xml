@@ -9,11 +9,13 @@
         <outputRelativeToContentRoot value="true" />
         <module name="myApp" />
         <module name="Web API" />
+        <module name="Backend" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Backend" options="-parameters" />
       <module name="Web API" options="-parameters" />
       <module name="myApp" options="-parameters" />
     </option>

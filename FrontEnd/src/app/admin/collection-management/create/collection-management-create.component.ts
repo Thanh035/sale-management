@@ -37,8 +37,7 @@ export class CollectionManagementCreateComponent {
     }
 
     previousState(): void {
-      // window.location.href = "./"+this.collectionId;
-      // window.history.back();
+      window.history.back();
     }
 
     save(): void {
