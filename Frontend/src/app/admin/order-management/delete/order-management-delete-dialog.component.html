@@ -1,0 +1,61 @@
+<!-- <form *ngIf="draftOrderId && code" name="deleteForm" (ngSubmit)="confirmDelete(draftOrderId)">
+  <div class="modal-header">
+    <h4 class="modal-title">Xóa đơn hàng nháp</h4>
+
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <app-alert-error></app-alert-error>
+
+    <p>
+      Bạn có muốn xóa đơn hàng <strong class="text-danger">
+        &nbsp;
+        {{ code }}?
+      </strong>?
+    </p>
+
+    <p>
+      Đơn hàng đã xóa không thể phục hồi lại được.
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <span>Không</span>
+    </button>
+
+    <button type="submit" class="btn btn-danger">
+      <span>Tiếp tục</span>
+    </button>
+  </div>
+
+</form>
+
+
+<form *ngIf="draftOrders" name="deleteForm">
+  <div class="modal-header">
+    <h4 class="modal-title">Xoá những đơn hàng đã chọn</h4>
+
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <app-alert-error></app-alert-error>
+
+    <p>
+      Bạn có muốn xoá cho những đơn hàng đã chọn?
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <span>Hủy</span>
+    </button>
+
+    <button type="submit" class="btn btn-danger" (click)="deleteDraftOrders()">
+      <span>Xác nhận</span>
+    </button>
+  </div>
+</form>
+ -->

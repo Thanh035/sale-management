@@ -1,0 +1,34 @@
+<div class="modal-header">
+  <h5 class="modal-title">Thay đổi địa chỉ mặc định</h5>
+  <button type="button" data-dismiss="modal" aria-hidden="true" class="btn-close" (click)="cancel()">×</button>
+</div>
+
+<div class="modal-body">
+  <div class="editaddress-detail mb-4">
+    <p class="fw-bold text-uppercase mb-2" id="cspot-customersdetail-diachimacdinh">Địa chỉ mặc định</p>
+    <p class="mb-1 text-muted">thanh</p>
+    <p class="mb-1 text-muted">Vietnam</p>
+    <div class="row">
+      <div class="col">
+        <p class="mt-4 text-primary">
+          <span class="cursor-pointer" (click)="updateAddress()" style="cursor: pointer;">Chỉnh sửa địa chỉ</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="editaddress-detail">
+    <p class="mb-1 text-muted">thanh</p>
+    <p class="mb-1 text-muted">Vietnam</p>
+    <div class="row align-items-center mt-3">
+      <div class="col">
+        <p class="text-primary">
+          <span class="cursor-pointer">Chỉnh sửa địa chỉ</span>
+        </p>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-secondary">Chọn làm mặc định</button>
+      </div>
+    </div>
+  </div>
+</div>

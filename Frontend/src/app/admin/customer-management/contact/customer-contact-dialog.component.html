@@ -1,0 +1,75 @@
+<div class="modal-header">
+  <h5 class="modal-title" data-gtm-vis-recent-on-screen12958095_1557="2971605" data-gtm-vis-first-on-screen12958095_1557="2971605" data-gtm-vis-total-visible-time12958095_1557="100" data-gtm-vis-has-fired12958095_1557="1">Chỉnh sửa thông tin liên hệ</h5>
+  <div class="d-flex">
+    <button class="btn btn-link close">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="#A6A6A6"></path>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<div class="modal-body">
+  <div class="pd-all-20">
+    <form [formGroup]="customerForm">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-6 col-12">
+            <label class="label-input-group">Họ và tên</label>
+            <div class="">
+              <input
+                type="text"
+                class="next-input"
+                placeholder="Nhập họ và tên"
+                formControlName="fullName"
+                name="fullName"
+                if="fullName"
+              >
+            </div>
+          </div>
+          <div class="col-sm-6 col-12">
+            <label class="label-input-group">Địa chỉ email</label>
+            <div class="">
+              <input
+                type="text"
+                class="next-input"
+                placeholder="Nhập địa chỉ email"
+                formControlName="email"
+                name="email"
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-6 col-12 custom-InputDatetimePicker-customer">
+            <label class="label-input-group">Số điện thoại</label>
+            <div class="">
+              <input
+                type="text"
+                class="next-input"
+                placeholder="Nhập số điện thoại"
+                name="mobile"
+                formControlName="mobile"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <div class="col-auto 1 one-row">
+    <div class="row">
+      <div class="col text-right">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+          <span>Hủy</span>
+        </button>
+        <button class="btn btn-primary" type="submit" (click)="save()">Cập nhật</button>
+      </div>
+    </div>
+  </div>
+</div>

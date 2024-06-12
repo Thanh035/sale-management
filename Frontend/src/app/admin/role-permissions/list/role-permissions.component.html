@@ -1,0 +1,79 @@
+<div class="page-wrapper">
+  <div class="content">
+    <div class="page-header">
+      <div class="page-title">
+        <h4>Danh sách vai trò</h4>
+      </div>
+      <div class="page-btn">
+        <a class="btn btn-added" routerLink="./new">
+          <img src="content/admin/image/icons/plus.svg" alt="img">Tạo vai trò</a>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table datanew">
+            <thead>
+              <tr>
+                <th>
+                  <span>VAI TRÒ</span>
+                </th>
+                <th>
+                  <span>MÃ VAI TRÒ</span>
+                </th>
+                <th>
+                    <span>NGÀY TẠO</span>
+                </th>
+                <th>
+                  <span>NGƯỜI TẠO</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody *ngIf="roles">
+              <tr *ngFor="let role of roles; trackBy: trackIdentity">
+                <td>{{ role.name }}</td>
+                <td>
+                  {{ role.code }}
+                </td>
+                <td>
+                  {{ role.createdDate | amLocale: 'vi' | amTimeAgo  }}
+                </td>
+                <td>
+                  {{ role.createdBy }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- <div *ngIf="roles">
+            <div class="dataTables_length" id="DataTables_Table_0_length">
+              Hiển thị:
+              <select [(ngModel)]="itemsPerPage" (ngModelChange)="loadAll()" name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="custom-select custom-select-sm form-control form-control-sm">
+                <option value="10">10 </option>
+                <option value="20">20 </option>
+                <option value="50">50 </option>
+              </select>
+            </div>
+
+            <div class="d-flex justify-content-center" >
+              <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+            </div>
+
+            <div class="d-flex justify-content-center">
+              <ngb-pagination
+              [collectionSize]="totalItems"
+              [(page)]="page"
+              [pageSize]="itemsPerPage"
+              [maxSize]="5"
+              [rotate]="true"
+              [boundaryLinks]="true"
+              (pageChange)="transition()"
+              ></ngb-pagination>
+
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
