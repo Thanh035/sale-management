@@ -1,0 +1,116 @@
+<div class="page-wrapper" style="min-height: 922px;">
+  <div class="content">
+    <div class="page-header">
+      <div class="page-title">
+        <h4>Thông tin tài khoản</h4>
+        <h6>Hồ sơ người dùng</h6>
+      </div>
+    </div>
+
+    <app-alert-error></app-alert-error>
+
+    <div class="alert alert-success" *ngIf="success">
+      <strong>Gửi email khôi phục mật khẩu thành công</strong>
+    </div>
+
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Tên</label>
+                <input type="text" name="fullname" formControlName="fullname">
+
+                <div *ngIf="editForm.get('fullname')!.invalid && (editForm.get('fullname')!.dirty || editForm.get('fullname')!.touched)">
+                  <small
+                    class="form-text text-danger"
+                    *ngIf="editForm.get('fullname')?.errors?.['maxlength']"
+                  >
+                    Trường này không thể dài hơn 100 ký tự.
+                  </small>
+
+                  <small class="form-text text-danger" *ngIf="editForm.get('fullname')?.errors?.['required']" >
+                    Họ tên không được bỏ trống
+                  </small>
+
+                  <small
+                    class="form-text text-danger"
+                    *ngIf="editForm.get('fullname')?.errors?.['pattern']"
+                  >
+                    Vui lòng chỉ nhập các ký tự chữ cái.
+                  </small>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Số điện thoại</label>
+                <input type="text" name="phoneNumber" formControlName="phoneNumber"/>
+
+                <div *ngIf="editForm.get('phoneNumber')!.invalid && (editForm.get('phoneNumber')!.dirty || editForm.get('phoneNumber')!.touched)">
+                <small
+                  class="form-text text-danger"
+                  *ngIf="editForm.get('phoneNumber')?.errors?.['pattern']"
+                >
+                  Số điện thoại của bạn không hợp lệ.
+                </small>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Địa chỉ email</label>
+                <input type="text" name="email" [value]="user?.email" [attr.disabled]="true">
+              </div>
+            </div>
+            <div class="row">
+              <label>Khôi Phục Mật Khẩu</label>
+              <div class="row my-4">
+                <div class="col">Bạn có thể khôi phục mật khẩu cho tài khoản&nbsp; <strong>{{ editForm.get('fullname')?.value }}</strong>&nbsp;bằng cách gửi email thay đổi mật khẩu tới địa chỉ&nbsp; <strong>{{ user?.email }}</strong>. </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <a class="btn btn-secondary" (click)="requestReset()">
+                    <span class="color-dark-gray font-weight-500">Gửi email khôi phục mật khẩu cho tài khoản</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6 col-12">
+              <div class="form-group" data-select2-id="5">
+                <label for="sel1" class="form-label">Vai trò</label>
+                <select class="form-select" name="role" formControlName="roles" multiple>
+                  <option *ngFor="let role of roles" [value]="role" > {{ role }} </option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-11">
+          <button
+            class="btn btn-danger me-2"
+          >
+            <svg class="svg-next-icon mr-3 position-top-minus-one svg-next-icon-size-14" width="14" height="14">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                <path d="M16 6a1 1 0 1 1 0 2h-1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8H4a1 1 0 1 1 0-2h12zM9 4a1 1 0 1 1 0-2h2a1 1 0 1 1 0 2H9zm2 12h2V8h-2v8zm-4 0h2V8H7v8z"></path>
+              </svg>
+            </svg>
+            Xóa người dùng
+          </button>
+        </div>
+        <div class="col-lg-1">
+          <button
+             [disabled]="editForm.invalid || isSaving"
+            class="btn btn-primary me-2">Lưu</button>
+        </div>
+
+
+      </div>
+    </form>
+
+  </div>
+</div>

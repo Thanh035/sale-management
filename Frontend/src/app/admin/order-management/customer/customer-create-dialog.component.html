@@ -1,0 +1,109 @@
+<div class="modal-header">
+  <h5 class="modal-title" data-gtm-vis-recent-on-screen12958095_1557="2249607" data-gtm-vis-first-on-screen12958095_1557="2249607" data-gtm-vis-total-visible-time12958095_1557="100" data-gtm-vis-has-fired12958095_1557="1">Tạo khách hàng</h5>
+  <div class="d-flex">
+    <button class="btn btn-link close">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="#A6A6A6"></path>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<div class="modal-body">
+  <div class="pd-all-20">
+    <div class="form-group px-0">
+      <div class="row">
+        <div class="col-sm-6 col-12">
+          <label class="label-input-group">Họ</label>
+          <div class="">
+            <input autocomplete="on" type="text" class="next-input" placeholder="Nhập họ" step="1" value="">
+          </div>
+        </div>
+        <div class="col-sm-6 col-12">
+          <label class="label-input-group">Tên</label>
+          <div class="">
+            <input autocomplete="on" type="text" class="next-input" placeholder="Nhập tên" step="1" value="">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group px-0">
+      <div class="row">
+        <div class=" col-12">
+          <label class="label-input-group">Địa chỉ email</label>
+          <div class="">
+            <input autocomplete="on" type="text" class="next-input" placeholder="Nhập địa chỉ email" step="1" value="">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group px-0">
+      <div class="row">
+        <div class="col-sm-6 col-12">
+          <label class="label-input-group">Địa chỉ</label>
+          <div class="">
+            <input autocomplete="on" type="text" class="next-input" placeholder="Nhập địa chỉ" step="1" value="">
+          </div>
+        </div>
+        <div class="col-sm-6 col-12">
+          <label class="label-input-group">Số điện thoại</label>
+          <div class="">
+            <input autocomplete="on" type="text" class="next-input" placeholder="Nhập số điện thoại" step="1" value="">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group px-0 pb-0">
+      <div class="row">
+        <div class="col-sm-6 col-12 pt-16">
+          <label class="label-input-group text-left">Quốc gia</label>
+          <div class="trigger omni-selection ">
+            <span>
+              <div class="omni-input-wrapper  ">
+                <input title="Vietnam" placeholder="Chọn quốc gia" class="omni-input " type="text" autocomplete="new-password" value="Vietnam" disabled>
+              </div>
+            </span>
+          </div>
+        </div>
+        <div class="col-sm-6 col-12 pt-16">
+          <label class="label-input-group text-left">Tỉnh/Thành phố</label>
+          <div class="trigger omni-selection ">
+            <span>
+              <div class="omni-input-wrapper  ">
+                <select class="form-control" (change)="onProvinceChange($event)" name="provinceCode" formControlName="provinceCode">
+                  <option *ngFor="let province of provinces" [value]="province.code">{{ province.name }}</option>
+                </select>
+              </div>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 col-12 pt-16">
+          <label>Quận/Huyện</label>
+          <select class="form-control" (change)="onDistrictsChange($event)" name="districtCode" formControlName="districtCode">
+            <option *ngFor="let district of districts" [value]="district.code">{{ district.name }}</option>
+          </select>
+        </div>
+        <div class="col-sm-6 col-12 pt-16">
+          <label>Phường/ Xã</label>
+          <select class="form-control" name="wardCode" formControlName="wardCode">
+            <option *ngFor="let ward of wards" [value]="ward.code">{{ ward.name }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <div class="col-auto 1 one-row">
+    <div class="d-flex justify-content-between align-items-center">
+      <div></div>
+      <div>
+        <button class="btn btn-secondary" (click)="cancel()">Hủy</button>
+        <button class="btn btn-primary">Lưu</button>
+      </div>
+    </div>
+  </div>
+</div>

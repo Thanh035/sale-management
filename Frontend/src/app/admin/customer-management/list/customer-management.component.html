@@ -1,0 +1,201 @@
+<div class="page-wrapper" >
+  <div class="content" *ngIf="customers">
+      <div class="page-header">
+        <div class="page-title">
+          <h4>Danh sách khách hàng</h4>
+          <h6>Tất cả khách hàng</h6>
+        </div>
+        <div class="page-btn">
+          <div class="d-flex flex-row">
+            <div>
+              <a [routerLink]="['./new']" class="btn btn-added">
+                <img src="content/admin/image/icons/plus.svg" alt="img" class="me-1">
+                <span>Tạo khách hàng</span>
+              </a>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <div class="table-top">
+            <div class="search-set">
+              <div class="search-path">
+                <a class="btn btn-filter" id="filter_search">
+                  <img src="content/admin/image/icons/filter.svg" alt="img">
+                  <span>
+                    <img src="content/admin/image/icons/closes.svg" alt="img">
+                  </span>
+                </a>
+              </div>
+              <div class="search-input">
+                <a class="btn btn-searchset">
+                  <img src="content/admin/image/icons/search-white.svg" alt="img">
+                </a>
+                <div id="DataTables_Table_0_filter" class="dataTables_filter">
+                  <label>
+                    <input
+                    [(ngModel)]="filter" (ngModelChange)="transition()"
+                    placeholder="Tìm kiếm"
+                    type="search"
+                    class="form-control form-control-sm"
+                    aria-controls="DataTables_Table_0">
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="wordset">
+
+            </div>
+          </div>
+
+          <div class="card mb-0" id="filter_inputs">
+            <div class="card-body pb-0">
+              <div class="row">
+                <div class="col-lg-12 col-sm-12">
+                  <div class="row">
+                    <div class="col-lg col-sm-6 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>Loại</option>
+                          <option>Computers</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg col-sm-6 col-12">
+                      <div class="form-group">
+                        <select class="form-select">
+                          <option>Nhà cung cấp</option>
+                          <option>N/D</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-1 col-sm-6 col-12">
+                      <div class="form-group">
+                        <a class="btn btn-filters ms-auto">
+                          <img src="content/admin/image/icons/search-whites.svg" alt="img">
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table  datanew">
+              <thead>
+                <tr appSort [(predicate)]="predicate" [(ascending)]="ascending" (sortChange)="transition()">
+                  <th class="sorting_asc" tabindex="0"  rowspan="1" colspan="1" aria-sort="ascending" style="width: 54.7917px;">
+                    <label class="checkboxs">
+                      <input type="checkbox" id="select-all" [(ngModel)]="selectAll" (change)="toggleSelectAll($event)">
+                      <span class="checkmarks"></span>
+                    </label>
+                  </th>
+                    <th [hidden]="checkboxes.length <= 0">
+                      <div class="table-bulk-actions">
+                        Chọn thao tác
+                        <a type="button" class="me-3 confirm-text" (click)="deleteCustomers()" >
+                          <img src="/content/admin/image/icons/delete.svg" alt="img">
+                        </a>
+                        <span>{{ checkboxes.length }} sản phẩm đang chọn </span>
+                      </div>
+                    </th>
+
+                    <th [hidden]="checkboxes.length > 0" scope="col" appSortBy="name">
+                      <span>Khách hàng</span>
+                      <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th [hidden]="checkboxes.length > 0">
+                      <span>Địa điểm</span>
+                    </th>
+                    <th [hidden]="checkboxes.length > 0" scope="col" appSortBy="name">
+                      <span>Tổng đơn hàng</span>
+                      <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th [hidden]="checkboxes.length > 0" scope="col" appSortBy="name">
+                      <span>Đơn hàng gần nhất</span>
+                      <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th [hidden]="checkboxes.length > 0" scope="col" appSortBy="name">
+                      <span>Nợ phải mua</span>
+                      <fa-icon icon="sort"></fa-icon>
+                    </th>
+                    <th [hidden]="checkboxes.length > 0" scope="col" appSortBy="name">
+                      <span>Tỏng tiền đã mua</span>
+                      <fa-icon icon="sort"></fa-icon>
+                    </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let customer of customers; trackBy:trackIdentity">
+                  <td>
+                    <label class="checkboxs">
+                      <input type="checkbox"  (change)="checkboxChanged(customer)" [checked]="isCheckboxSelected(customer)">
+                      <span class="checkmarks"></span>
+                    </label>
+                  </td>
+                  <td class="customerimgname">
+                    <a [routerLink]="['./', customer.id]">
+                      {{ customer.fullName }}
+                    </a>
+                  </td>
+                  <td>{{ customer.address  }}</td>
+                  <td class="text-center">{{ customer.orderCount || 0  }}</td>
+                  <td class="text-center">{{ customer.lastOrder || '---'  }}</td>
+                  <td class="text-center">{{ customer.debt || 0 | currency:'VND' }}</td>
+                  <td class="text-center">{{ customer.totalSpent || 0 | currency:'VND'  }}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div *ngIf="customers">
+              <div class="dataTables_length" id="DataTables_Table_0_length">
+                Hiển thị:
+                <select [(ngModel)]="itemsPerPage" (ngModelChange)="loadAll()" name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="custom-select custom-select-sm form-control form-control-sm">
+                  <option value="10">10 </option>
+                  <option value="20">20 </option>
+                  <option value="50">50 </option>
+                </select>
+              </div>
+
+              <div class="d-flex justify-content-center" >
+                <app-item-count [params]="{ page: page, totalItems: totalItems, itemsPerPage: itemsPerPage }"></app-item-count>
+              </div>
+
+              <div class="d-flex justify-content-center">
+                <ngb-pagination
+                [collectionSize]="totalItems"
+                [(page)]="page"
+                [pageSize]="itemsPerPage"
+                [maxSize]="5"
+                [rotate]="true"
+                [boundaryLinks]="true"
+                (pageChange)="transition()"
+                ></ngb-pagination>
+
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+  </div>
+  <!-- <div class="container max-width-center" *ngIf="!customers">
+    <div class="row align-items-center">
+      <div class="col-xs-12 col-md-6">
+        <h1 class="ui-empty-state_title">Quản lý danh sách khách hàng</h1>
+        <h2 class="ui-empty-state_subtitle">Vui lòng cập nhật thông tin khách hàng</h2>
+        <div class="ui-empty-state_btngroup">
+          <a routerLink="./new" class="btn btn-primary ui-empty-state_button mr-3">Tạo khách hàng</a>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-6 pt-2">
+        <img src="//hstatic.net/0/0/global/design/omni/order-init-v3.svg" alt="" class="img-fluid">
+      </div>
+    </div>
+  </div> -->
+</div>
+

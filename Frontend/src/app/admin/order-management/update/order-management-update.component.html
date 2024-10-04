@@ -1,0 +1,216 @@
+<div class="page-wrapper" style="min-height: 922px;">
+  <div class="content">
+    <div class="page-header">
+      <div class="order-detail-header ui-title-bar-container max-width-center">
+        <div class="container">
+          <div class="row align-items-start">
+            <div class="col-lg col-sm-12">
+              <div class="order-detail--list-status row">
+                <div class="col-md-6">
+                      <h5 class="card-title">Mã</h5>
+                      <div class="ui-toolbar-product-info">
+                        <div class="ui-product-head">
+                          <strong class="order-detail--list-status-code">{{ order?.code }}</strong>
+                        </div>
+                      </div>
+                </div>
+
+                <div class="col-md-6">
+                      <h5 class="card-title">Trạng thái thanh toán</h5>
+                      <div class="ui-toolbar-product-info">
+                        <div class="ui-product-head">
+                          <span class="order-detail--list-status-name">
+                            <span class="omni-badge badge-light-success">
+                              <span class="d-flex align-items-center">{{ order?.paymentType === 'paid' ? 'Đã thanh toán' : 'Chờ xử lý' }}</span>
+                            </span>
+                          </span>
+                        </div>
+                      </div>
+                </div>
+              </div>
+              <div>
+                <span>{{order?.lastModifiedDate | date:'dd/MM/yyyy hh:mm:ss'}}</span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-body">
+        <div class="card">
+          <div class="card-body">
+            <div class="ui-information-body">
+              <div class="row" >
+                <div class="col" *ngIf="orderProducts.length > 0">
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th class="min-width-300px">Sản Phẩm</th>
+                          <th class="text-center">Số lượng</th>
+                          <th class="text-right">Giá (đ)</th>
+                          <th class="text-right">Thành tiền (đ)</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let product of orderProducts">
+                          <input
+                            hidden
+                            type="text"
+                            name="products.i"
+                            formControlName="note"
+                          />
+                          <td class="align-middle">
+                            <div class="d-flex align-items-center">
+                              <div class="mr-3 mb-3">
+                                <img
+                                  [src]="'http://localhost:8096/api/v1.0/' + product.idProduct + '/product-image'"
+                                  class="box-image" style="max-width: 100px;"
+                                />
+                              </div>
+                              <div class="mr-3 mb-3">
+                                <a [routerLink]="['/admin/products', product.idProduct]" class="text-primary d-block">{{product.productName}}</a>
+                              </div>
+                            </div>
+                          </td>
+                          <td class="align-middle text-right">
+                            <input
+                              type="number"
+                              class="form-control text-right"
+                              [value]="product.numberItems"
+                              style="max-width: 100px;"
+                              name="quantity"
+                              disabled
+                            >
+                          </td>
+                          <td class="align-middle text-center">
+                            {{ product.sellingPrice| currency:'VND' }}
+                          </td>
+                          <td class="align-middle text-center">{{ product.unitPrice | currency:'VND' }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="omni-layout-card--header line-bottom">
+              <span class="omni-badge badge-light-success badge-M order-status-badge undefined">
+                <span class="d-flex align-items-center">
+                  <span>Đã thanh toán</span>
+                </span>
+              </span>
+            </div>
+            <hr>
+            <div class="ui-information-body">
+              <div class="row">
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Ghi Chú Đơn Hàng</label>
+                    <textarea
+                      placeholder="Thêm ghi chú cho đơn hàng"
+                      rows="1"
+                      name="note"
+                      [(ngModel)]="note"
+                    >
+                    </textarea>
+                  </div>
+                  <div class="form-group d-flex justify-content-end">
+                    <button class="btn btn-success">
+                      <span>Cập nhật</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-12">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-left">
+                        <b>Số lượng sản phẩm</b>
+                    </div>
+                    <div class="text-right">
+                        <b>{{ numberItems }}</b>
+                    </div>
+                  </div>
+                 <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-left">
+                        <b>Tổng tiền hàng</b>
+                    </div>
+                    <div class="text-right">
+                      <b>{{ totalCost | currency:'VND' }}</b>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-left text-primary">
+                        <b>Giảm giá</b>
+                    </div>
+                    <div class="text-right">
+                      <b>{{ 0 | currency:'VND' }}</b>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-left">
+                        <b>Tạm tính</b>
+                    </div>
+                    <div class="text-right fw-bolder">
+                      <b>{{ subTotal | currency:'VND' }}</b>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="text-left text-primary">
+                        <b>Vận chuyển</b>
+                    </div>
+                    <div class="text-right">
+                      <b>{{ 0 | currency:'VND' }}</b>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center fw-bolder">
+                    <div class="text-left">
+                        <b>Tổng giá trị đơn hàng</b>
+                    </div>
+                    <div class="text-right">
+                      <b>{{ totalCost | currency:'VND' }}</b>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center fw-bolder">
+                    <span class="text-secondary mb-0">
+                      {{ order?.paymentMethod === 'bankTransfer' ? 'Chuyển khoản qua ngân hàng' : 'Thanh toán khi giao hàng (COD)' }}
+                    </span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center fw-bolder">
+                    <div class="text-left">
+                        <b>Đã thanh toán</b>
+                    </div>
+                    <div class="text-right">
+                      <b>{{ totalCost | currency:'VND' }}</b>
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center fw-bolder" *ngIf="order?.paymentType !== 'paid'">
+                    <div class="form-group">
+                      <button class="btn btn-primary" (click)="payment()" >
+                        <span>Thanh toán</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <a
+            class="btn btn-danger me-2"
+          >
+            Xóa đơn hàng
+          </a>
+        </div>
+    </div>
+  </div>
+</div>
+

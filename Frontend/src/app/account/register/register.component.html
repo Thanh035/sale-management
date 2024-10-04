@@ -1,0 +1,193 @@
+<div class="d-flex justify-content-center">
+  <div class="col-md-8">
+    <h1 data-cy="registerTitle">Registration</h1>
+
+    <div class="alert alert-success" *ngIf="success" >
+      <strong>Registration saved!</strong> Please check your email for confirmation.
+    </div>
+
+    <div class="alert alert-danger" *ngIf="error" >
+      <strong>Registration failed!</strong> Please try again later.
+    </div>
+
+    <div class="alert alert-danger" *ngIf="errorUserExists" >
+      <strong>fullname name already registered!</strong> Please choose another one.
+    </div>
+
+    <div class="alert alert-danger" *ngIf="errorEmailExists" >
+      <strong>Email is already in use!</strong> Please choose another one.
+    </div>
+  </div>
+</div>
+
+<div class="breadcrumb_nobackground margin-bottom-0">
+  <section class="bread-crumb">
+    <span class="crumb-border"></span>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 a-left">
+          <ul class="breadcrumb">
+            <li class="home">
+              <a routerLink="/home">
+                <span>Trang chủ</span>
+              </a>
+              <span class="mr_lr">
+                <i class="fas fa-circle"></i>
+              </span>
+            </li>
+            <li>
+              <strong>
+                <span>Đăng ký tài khoản</span>
+              </strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<div class="bg_base_lr">
+  <div class="container">
+    <div class="row row-noGutter-2">
+      <div class="content_login_base bg_login">
+        <div class="col-lg-7 col-lg-offset-3 col-md-7 col-md-offset-3 col-sm-12 col-xs-12 margin-bottom-40 padding_xs_0">
+          <div class="page_login_ page_base_h">
+            <div id="login">
+              <form name="form" role="form" (ngSubmit)="register()" [formGroup]="registerForm" *ngIf="!success">
+                <div class="form-signup form_hh clearfix">
+                  <div class="row">
+                    <div class="col-md-12 col-lg-12 col-sm-12 col-xs-12 heading no-padding">
+                      <h1 class="title_center_page title_customers">Đăng ký tài khoản</h1>
+                      <p> Đăng ký ngay tài khoản để nhận được những ưu đãi hấp dẫn khi mua hàng </p>
+                      <div class="content_all">
+                        <fieldset class="form-group content_r">
+                          <input
+                          type="text"
+                          placeholder="Họ và tên"
+                          class="form-control form-control-lg"
+                          id="fullname"
+                          name="fullname"
+                          formControlName="fullname"
+                          data-cy="fullname"
+                          #fullname
+                          required>
+
+                        </fieldset>
+
+                        <fieldset class="form-group content_r">
+                          <input
+                          placeholder="Email"
+                          class="form-control form-control-lg"
+                          name="email"
+                          id="email"
+                          required
+                          type="email"
+                          formControlName="email"
+                          data-cy="email"
+                          #email>
+
+                        </fieldset>
+
+                        <fieldset class="form-group content_r">
+                          <input
+                          type="text"
+                          placeholder="Số điện thoại"
+                          class="form-control form-control-lg"
+                          name="phone"
+                          id="phone"
+                          required
+                          formControlName="phoneNumber"
+                          data-cy="phoneNumber">
+                        </fieldset>
+
+                        <fieldset class="form-group content_r">
+                          <input
+                          type="password"
+                          placeholder="Mật khẩu"
+                          class="form-control form-control-lg"
+                          required
+                          id="password"
+                          name="password"
+                          formControlName="password"
+                          data-cy="firstPassword">
+
+                          <app-password-strength-bar [passwordToCheck]="registerForm.get('password')!.value"></app-password-strength-bar>
+                        </fieldset>
+                      </div>
+                    </div>
+                    <div class="btn_style">
+                      <button
+                      type="summit"
+                      class="button_gradient btn btn-primary btn_customer"
+                      data-cy="submit"
+                      [disabled]="registerForm.invalid">
+                      Đăng ký
+                      </button>
+                    </div>
+                    <!-- <div class="block social-login--facebooks">
+                      <p class="a-center"> Hoặc đăng nhập bằng </p>
+                      <script>
+                        function loginFacebook() {
+                          var a = {
+                              client_id: "947410958642584",
+                              redirect_uri: "https://store.mysapo.net/account/facebook_account_callback",
+                              state: JSON.stringify({
+                                redirect_url: window.location.href
+                              }),
+                              scope: "email",
+                              response_type: "code"
+                            },
+                            b = "https://www.facebook.com/v3.2/dialog/oauth" + encodeURIParams(a, !0);
+                          window.location.href = b
+                        }
+
+                        function loginGoogle() {
+                          var a = {
+                              client_id: "997675985899-pu3vhvc2rngfcuqgh5ddgt7mpibgrasr.apps.googleusercontent.com",
+                              redirect_uri: "https://store.mysapo.net/account/google_account_callback",
+                              scope: "email profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/userinfo.profile",
+                              access_type: "online",
+                              state: JSON.stringify({
+                                redirect_url: window.location.href
+                              }),
+                              response_type: "code"
+                            },
+                            b = "https://accounts.google.com/o/oauth2/v2/auth" + encodeURIParams(a, !0);
+                          window.location.href = b
+                        }
+
+                        function encodeURIParams(a, b) {
+                          var c = [];
+                          for (var d in a)
+                            if (a.hasOwnProperty(d)) {
+                              var e = a[d];
+                              null != e && c.push(encodeURIComponent(d) + "=" + encodeURIComponent(e))
+                            } return 0 == c.length ? "" : (b ? "?" : "") + c.join("&")
+                        }
+                      </script>
+                      <a href="javascript:void(0)" class="social-login--facebook" onclick="loginFacebook()">
+                        <img width="129px" height="37px" alt="facebook-login-button" src="//bizweb.dktcdn.net/assets/admin/images/login/fb-btn.svg">
+                      </a>
+                      <a href="javascript:void(0)" class="social-login--google" onclick="loginGoogle()">
+                        <img width="129px" height="37px" alt="google-login-button" src="//bizweb.dktcdn.net/assets/admin/images/login/gp-btn.svg">
+                      </a>
+                    </div> -->
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-xs-12 a-center" style="margin-top:15px; padding: 0; ">
+              <p>
+                Tài khoản đã được đăng kí bạn hãy kiểm tra email
+                <a routerLink="/account/login" class="btn-link-style btn-register" style="color: red;">
+                  Đăng nhập
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-12 col-xs-12"></div>
+      </div>
+    </div>
+  </div>
+</div>

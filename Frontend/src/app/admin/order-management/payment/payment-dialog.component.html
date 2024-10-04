@@ -1,0 +1,64 @@
+<div class="modal-header">
+  <h5 class="modal-title" data-gtm-vis-recent-on-screen12958095_1557="21574775" data-gtm-vis-first-on-screen12958095_1557="21574776" data-gtm-vis-total-visible-time12958095_1557="100" data-gtm-vis-has-fired12958095_1557="1">Thanh toán đơn hàng</h5>
+  <div class="d-flex">
+    <button class="btn btn-link close">
+      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" fill="none">
+        <path d="M14 1.41L12.59 0L7 5.59L1.41 0L0 1.41L5.59 7L0 12.59L1.41 14L7 8.41L12.59 14L14 12.59L8.41 7L14 1.41Z" fill="#A6A6A6"></path>
+      </svg>
+    </button>
+  </div>
+</div>
+
+<div class="modal-body">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="p-4 border-bottom">
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="font-weight-bold">Tổng tiền cần thanh toán</span>
+            <span class="font-weight-bold">{{ totals | currency:'VND' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="p-4 border-bottom">
+          <p class="selection-value d-flex align-items-center no-wrap min-width-0">
+            <span class=" text-truncate">Chuyển khoản qua ngân hàng</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="p-4">
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="font-weight-bold">Tiền thanh toán</span>
+            <span class="font-weight-bold">{{ totals | currency:'VND' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal-footer">
+  <div class="col-auto 1 one-row">
+    <div class="d-flex flex-row justify-content-between">
+      <div></div>
+      <div class="text-right">
+        <button class="btn btn-default mr-2" (click)="cancel()">
+          <span>Hủy</span>
+        </button>
+        <button id="GTM-tao_don_hang" class="btn btn-primary GTM-tao_don_hang" (click)="confirm('cod')">
+          <span>Xác nhận thanh toán</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

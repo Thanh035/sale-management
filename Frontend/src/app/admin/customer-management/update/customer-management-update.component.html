@@ -1,0 +1,148 @@
+<div class="page-wrapper" style="min-height: 922px;">
+  <div class="content">
+    <div class="page-header">
+      <div class="page-title">
+        <h4>Thông tin khách hàng</h4>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="row">
+        <div class="col-lg-8 col-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="wrapper-content mb-5">
+                <div class="ui-information">
+                  <div class="ui-information-body">
+                    <div class="form-group px-0 pt-0">
+                      <div class="d-flex align-items-center">
+                        <span class="font-weight-bold text-uppercase table-break-word ml-4">{{ customer?.fullName }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ui-information-body">
+                    <div class="form-group text-center p-0 border-bottom">
+                      <div class="row">
+                        <div class="col-md-6 col-lg-3 mb-3 mb-md-0">
+                          <!-- Adjusted column size for smaller screens -->
+                          <p><a target="_blank" href="/admin/orders/1610164114">Đơn hàng gần nhất</a></p>
+                          <p class="fw-bold">---</p>
+                        </div>
+                        <div class="col-md-6 col-lg-3 mb-3 mb-md-0">
+                          <!-- Adjusted column size for smaller screens -->
+                          <p class="fw-ligher">Doanh thu tích lũy</p>
+                          <p class="fw-bold"> {{ 0 | currency:'VND'}}</p>
+                          <p class="fw-ligher">0 đơn hàng</p>
+                        </div>
+                        <div class="col-md-6 col-lg-3 mb-3 mb-md-0">
+                          <!-- Adjusted column size for smaller screens -->
+                          <p class="fw-ligher">Giá trị trung bình</p>
+                          <p class="fw-bold">{{ 0 | currency:'VND'}}</p>
+                        </div>
+                        <div class="col-md-6 col-lg-3">
+                          <!-- Adjusted column size for smaller screens -->
+                          <p class="fw-ligher">Nợ phải thu</p>
+                          <p class="fw-bold">{{ 0 | currency:'VND'}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="ui-information-body">
+                    <div class="form-group px-0 pb-0">
+                      <div class="row">
+                        <div class="col-12">
+                          <label class="label-input-group">Ghi chú</label>
+                          <textarea placeholder="Nhập ghi chú" rows="1" class="hrv-ui-textarea" style="overflow: hidden; overflow-wrap: break-word; height: 40.3333px;"></textarea>
+                        </div>
+                      </div>
+                      <div class="mt-3 d-flex justify-content-between">
+                        <!-- <button class="btn btn-primary">Gửi email mời tạo tài khoản</button> -->
+                        <button class="btn btn-primary">
+                          <span>Lưu</span>
+                        </button>
+                        <button class="btn btn-danger mb-0 btn-100"><svg class="svg-next-icon mr-3 color-white svg-next-icon-size-12" width="12" height="12"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M16 6a1 1 0 1 1 0 2h-1v9a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V8H4a1 1 0 1 1 0-2h12zM9 4a1 1 0 1 1 0-2h2a1 1 0 1 1 0 2H9zm2 12h2V8h-2v8zm-4 0h2V8H7v8z"></path></svg></svg><span class="color-white">Xóa khách hàng</span></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-4">
+          <div class="card">
+            <div class="wrapper-content mb-5 card-body">
+              <div class="ui-information">
+                <div class="ui-information-body">
+                  <div class="form-group">
+                    <div class="row ">
+                      <div class="col">
+                        <p class="fw-bolder">Thông tin liên hệ</p>
+                      </div>
+                      <div class="col-auto text-right">
+                        <div>
+                          <div>
+                            <span (click)="customerContact()" style="cursor: pointer;">
+                              <span>
+                                <svg class="svg-next-icon text-secondary cursor-pointer svg-next-icon-size-12" width="12" height="12">
+                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <g>
+                                      <path d="M432,0c44.182,0,80,35.817,80,80c0,18.01-5.955,34.629-16,48l-32,32L352,48l32-32C397.371,5.955,413.988,0,432,0z M32,368   L0,512l144-32l296-296L328,72L32,368z M357.789,181.789l-224,224l-27.578-27.578l224-224L357.789,181.789z"></path>
+                                    </g>
+                                  </svg>
+                                </svg>
+                              </span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="my-3">
+                      <p class="mb-1 color-blue text-primary">{{ customer?.email }}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="ui-information-body">
+                  <div class="form-group px-0 pb-0">
+                    <div class="row no-gutters align-items-center mb-2">
+                      <div class="col">
+                        <p class="fw-bolder mb-0" id="cspot-customersdetail-diachimacdinh">Địa chỉ mặc định</p>
+                      </div>
+                      <div class="col-auto text-right">
+                        <div>
+                          <div class="display-none"></div>
+                          <div>
+                            <span (click)="customerAddressInfo()" style="cursor: pointer;">
+                              <span>
+                                <svg class="svg-next-icon text-secondary cursor-pointer svg-next-icon-size-12" width="12" height="12">
+                                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                    <g>
+                                      <path d="M432,0c44.182,0,80,35.817,80,80c0,18.01-5.955,34.629-16,48l-32,32L352,48l32-32C397.371,5.955,413.988,0,432,0z M32,368   L0,512l144-32l296-296L328,72L32,368z M357.789,181.789l-224,224l-27.578-27.578l224-224L357.789,181.789z"></path>
+                                    </g>
+                                  </svg>
+                                </svg>
+                              </span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <p class="mb-1 table-break-word fw-ligher">{{ customer?.fullName }}</p>
+                    <p class="mb-1 table-break-word fw-ligher">{{ customer?.address }}</p>
+                    <p class="mb-1 table-break-word fw-ligher">{{ customer?.wardName }}, {{ customer?.districtName }}, {{ customer?.provinceName }}</p>
+                    <p class="mb-1 table-break-word fw-ligher">{{ customer?.phoneNumber }}</p>
+                    <p class="mt-3 text-primary">
+                      <span class="cursor-pointer" (click)="customerAddress()" style="cursor: pointer;">Tạo địa chỉ</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

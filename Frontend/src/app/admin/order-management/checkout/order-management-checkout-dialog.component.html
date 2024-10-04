@@ -1,0 +1,63 @@
+<div class="modal-header">
+  <h5 class="modal-title">Tạo đơn hàng</h5>
+  <button type="button" class="btn-close" aria-label="Close"></button>
+</div>
+
+<div class="modal-body">
+  <div class="pd-all-20 mb-0 form-group">
+    <div class="row">
+      <div class="col-12">
+        <div class="alert alert-info" role="alert">
+          <p>Xác nhận đã thanh toán cho đơn hàng này?</p>
+          <p>Trạng thái thanh toán của đơn hàng là
+            <strong>{{ paymentStatus=='paid' ? 'Đã thanh toán' : 'Chưa hoàn thành' }}</strong>.
+            Sau khi đơn hàng đã tạo, bạn không thể thay đổi phương thức hoặc trạng thái thanh toán.</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <label class="label-input-group">Phương thức thanh toán</label>
+        <div class="dropdown">
+
+          <div class="trigger omni-selection" (clickOutside)="closeDropdown()">
+            <span>
+              <div class="selection-content" [ngClass]="{ open: isDropdownOpen }">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="paymentMethodDropdown" (click)="toggleDropdown()">
+                  {{ selectedPaymentMethod }}
+                </button>
+              </div>
+
+              <div class="dropdown-menu" aria-labelledby="paymentMethodDropdown" [ngClass]="{ show: isDropdownOpen }">
+                <div class="dropdown-item" (click)="selectPaymentMethod('cod')">
+                  <span>Thanh toán khi giao hàng (COD)</span>
+                </div>
+                <div class="dropdown-item" (click)="selectPaymentMethod('bankTransfer')">
+                  <span>Chuyển khoản qua ngân hàng</span>
+                </div>
+              </div>
+
+            </span>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-12">
+        <label class="label-input-group mb-0">Số tiền đã nhận: {{ totals | currency:'VND' }}</label>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-footer">
+  <div class="col-auto 1 one-row">
+    <div class="row">
+      <div class="col-auto text-right">
+        <button type="button" class="btn btn-secondary mr-2" data-dismiss="modal" (click)="cancel()" >Hủy</button>
+        <button id="GTM-tao_don_hang" class="btn btn-primary" (click)="confirm()">Tạo đơn hàng</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<form *ngIf="collectionId && collectionName" name="deleteForm" (ngSubmit)="confirmDelete(collectionId)">
+  <div class="modal-header">
+    <h4 class="modal-title">Xóa nhóm sản phẩm</h4>
+
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <app-alert-error></app-alert-error>
+
+    <p>
+      Bạn chắc chắn xóa nhóm sản phẩm <strong class="text-danger">
+        &nbsp;
+        {{ collectionName }}
+      </strong>?
+    </p>
+
+    <p>
+      Nhóm sản phẩm đã xóa không thể phục hồi lại được.
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <span>Hủy</span>
+    </button>
+
+    <button type="submit" class="btn btn-danger">
+      <span>Xóa</span>
+    </button>
+  </div>
+
+</form>
+
+
+<form *ngIf="collections" name="deleteForm">
+  <div class="modal-header">
+    <h4 class="modal-title">Xóa những nhóm sản phẩm đã chọn?</h4>
+
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <app-alert-error></app-alert-error>
+
+    <p>
+      Bạn không thể phục hồi những nhóm sản phẩm đã xóa, bạn có chắc muốn tiếp tục?
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <span>Hủy</span>
+    </button>
+
+    <button type="submit" class="btn btn-danger" (click)="deleteCollections()">
+      <span>Xóa nhóm sản phẩm</span>
+    </button>
+  </div>
+</form>
+

@@ -1,0 +1,61 @@
+<form *ngIf="customerId && customerName" name="deleteForm" (ngSubmit)="confirmDelete(customerId)">
+  <div class="modal-header">
+    <h4 class="modal-title">Xóa nhóm khách hàng</h4>
+
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <app-alert-error></app-alert-error>
+
+    <p>
+      Bạn chắc chắn xóa nhóm khách hàng <strong class="text-danger">
+        &nbsp;
+        {{ customerName }}
+      </strong>?
+    </p>
+
+    <p>
+      Nhóm khách hàng đã xóa không thể phục hồi lại được.
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <span>Hủy</span>
+    </button>
+
+    <button type="submit" class="btn btn-danger">
+      <span>Xóa</span>
+    </button>
+  </div>
+
+</form>
+
+
+<form *ngIf="customers" name="deleteForm">
+  <div class="modal-header">
+    <h4 class="modal-title">Xóa những nhóm khách hàng đã chọn?</h4>
+
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <app-alert-error></app-alert-error>
+
+    <p>
+      Bạn không thể phục hồi những nhóm khách hàng đã xóa, bạn có chắc muốn tiếp tục?
+    </p>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <span>Hủy</span>
+    </button>
+
+    <button type="submit" class="btn btn-danger" (click)="deleteCustomers()">
+      <span>Xóa nhóm khách hàng</span>
+    </button>
+  </div>
+</form>
+

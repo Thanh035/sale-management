@@ -1,0 +1,109 @@
+<div class="page-wrapper" >
+  <div class="content">
+    <div class="page-header">
+      <div class="page-title">
+        <h4>Thông tin cửa hàng</h4>
+        <p>Tên cửa hàng xuất hiện trên cửa hàng của bạn.</p>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-3 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Tên cửa hàng</label>
+                <input type="text" formControlName="companyName" name="companyName" placeholder="Nhập tên cửa hàng" required value="Teyandee Shop">
+              </div>
+            </div>
+            <div class="col-lg-5 col-sm-6 col-12">
+              <div class="form-group">
+                <label>Tài khoản email</label>
+                <input type="text" formControlName="email" name="email" placeholder="Tài khoản email" required value="pqthanh035@gmail.com">
+                <!-- <p class="font-italic mb-0 mt-2 text-secondary">Email được sử dụng cho hỗ trợ khách hàng</p> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="page-header">
+      <div class="page-title">
+        <h4>Địa chỉ cửa hàng</h4>
+        <p>Địa chỉ này sẽ xuất hiện trên cửa hàng của bạn.</p>
+      </div>
+    </div>
+    <div class="page-body">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="form-group">
+              <label>Tên đăng ký giấy phép kinh doanh (GPKD) của doanh nghiệp</label>
+              <input type="text" formControlName="registrationName" name="registrationName">
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label>Điện thoại</label>
+              <input type="text" formControlName="email" name="email" placeholder="1800 1147" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label>Địa chỉ</label>
+              <input type="text" formControlName="email" name="email" placeholder="Số 19 Lê Thanh Nghị" required>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 col-12 pt-16">
+              <div class="form-group">
+                <label>Quốc gia</label>
+                <select class="form-control" disabled>
+                  <option disabled hidden>Chọn quốc gia</option>
+                  <option value="VN" selected>Vietnam</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6 col-12 pt-16">
+              <div class="form-group">
+                <label>Tỉnh/Thành phố</label>
+                <select class="form-control">
+                  <option disabled selected hidden>Chọn Tỉnh/Thành phố</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 col-12 pt-16">
+              <div class="form-group">
+                <label>Quận/Huyện</label>
+                <select class="form-control">
+                  <option disabled selected hidden>Chọn Quận/Huyện</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-sm-6 col-12 pt-16">
+              <div class="form-group">
+                <label>Phường/ Xã</label>
+                <select class="form-control">
+                  <option disabled selected hidden>Chọn Phường/ Xã</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-lg-1">
+          <button class="btn btn-primary me-2">
+            Lưu
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

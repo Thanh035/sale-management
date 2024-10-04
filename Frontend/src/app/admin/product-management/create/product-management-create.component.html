@@ -1,0 +1,243 @@
+<div class="page-wrapper" style="min-height: 922px;">
+  <div class="content">
+    <div class="page-header">
+      <div class="page-title">
+        <h4>Tạo sản phẩm</h4>
+      </div>
+    </div>
+    <div class="page-body">
+        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+          <app-alert-error></app-alert-error>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="ui-information-head">
+                <span class="ui-information-title font-weight-bold text-primary">Thông tin chung</span>
+              </div>
+              <hr>
+              <div class="ui-information-body">
+                <div class="row">
+                  <div class="form-group">
+                    <label>Tên sản phẩm</label>
+                    <input type="text" formControlName="productName" name="productName" placeholder="Nhập tên sản phẩm" required>
+
+                    <div *ngIf="editForm.get('productName')!.invalid && (editForm.get('productName')!.dirty || editForm.get('productName')!.touched)">
+                      <small
+                        class="form-text text-danger"
+                        *ngIf="editForm.get('productName')?.errors?.['maxlength']"
+                      >
+                        This field cannot be longer than 100 characters.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                      <label>Loại</label>
+                        <input
+                          type="text"
+                          placeholder="Chọn loại sản phẩm"
+                          matInput
+                          [matAutocomplete]="autoCategory"
+                          name="categoryName"
+                          formControlName="categoryName"
+                        />
+                        <mat-autocomplete #autoCategory="matAutocomplete">
+                          @for (category of categories; track category) {
+                          <mat-option [value]="category">{{category}}</mat-option>
+                          }
+                        </mat-autocomplete>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-6 col-sm-6 col-12">
+                    <div class="form-group">
+                      <label>Nhà cung cấp</label>
+                        <input
+                          type="text"
+                          placeholder="Chọn nhà cung cấp"
+                          matInput
+                          [matAutocomplete]="autoSupplier"
+                          name="supplierName"
+                          formControlName="supplierName"
+                        />
+                        <mat-autocomplete #autoSupplier="matAutocomplete">
+                          @for (supplier of suppliers; track supplier) {
+                          <mat-option [value]="supplier">{{supplier}}</mat-option>
+                          }
+                        </mat-autocomplete>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="form-group">
+                    <label>Mô tả sản phẩm</label>
+                    <ckeditor
+                      [editor]="Editor"
+                      name="description"
+                      formControlName="description"
+                    ></ckeditor>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body">
+              <div class="ui-information-head">
+                <span class="ui-information-title font-weight-bold text-primary">Hình ảnh sản phẩm</span>
+              </div>
+              <div class="ui-information-body">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <div class="custom-dropzone" ngx-dropzone [accept]="'image/*'" (change)="onSelect($event)">
+                        <ngx-dropzone-label>
+                          <div class="image-uploads">
+                            <img src="content/admin/image/icons/upload.svg" alt="img">
+                            <h4>Kéo và thả tệp để tải lên</h4>
+                          </div>
+                        </ngx-dropzone-label>
+                        <ngx-dropzone-image-preview ngProjectAs="ngx-dropzone-preview" *ngFor="let f of files" [file]="f" [removable]="true" (removed)="onRemove(f)">
+                          <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                        </ngx-dropzone-image-preview>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body ui-information">              <div class="ui-information-head">
+                <span class="ui-information-title font-weight-bold text-primary">Giá sản phẩm</span>
+              </div>
+              <div class="row ui-information-body">
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Giá bán</label>
+                    <input
+                      type="text"
+                      name="sellingPrice"
+                      formControlName="sellingPrice"
+                      (input)="calProfit()"
+                      (input)="validateInput($event)"
+                      (blur)="setDefaultIfEmpty($event)"
+                    >
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Giá so sánh</label>
+                    <input
+                      type="text"
+                      name="comparePrice"
+                      formControlName="comparePrice"
+                      (input)="validateInput($event)"
+                      (blur)="setDefaultIfEmpty($event)"
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-body ui-information">
+              <div class="ui-information-head">
+                <span class="ui-information-title font-weight-bold text-primary">Quản lý tồn kho</span>
+              </div>
+
+              <div class="row ui-information-body">
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Giá vốn</label>
+                    <input
+                      type="text"
+                      name="capitalPrice"
+                      formControlName="capitalPrice"
+                      (input)="calProfit()"
+                      (input)="validateInput($event)"
+                      (blur)="setDefaultIfEmpty($event)"
+                    >
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="row pt-4">
+                    <div class="col-auto">
+                      <p class="font-weight-normal text-secondary">Biên lợi nhuận:</p>
+                      <b class="text-secondary"> {{ profitMargin }}</b>
+                    </div>
+                    <div class="col-auto ml-4">
+                      <p class="font-weight-normal text-secondary">Lợi nhuận:</p>
+                      <b class="text-secondary">{{ profit | currency:'VND' }} </b>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row ui-information-body">
+
+
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>SKU</label>
+                    <input type="text" name="sku" formControlName="sku">
+                  </div>
+                </div>
+
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Barcode</label>
+                    <input type="text" name="barcode" formControlName="barcode">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row ui-information-body">
+                <div class="col-lg-3 col-sm-3 col-6">
+                    <div class="form-group">
+                        <label for="quantity">Cập nhật tồn kho</label>
+                        <input
+                          type="number"
+                          class="form-control"
+                          id="quantity"
+                          name="quantity"
+                          formControlName="quantity"
+                          (blur)="setDefaultIfEmpty($event)"
+                        >
+                    </div>
+                </div>
+
+                <div class="col-lg-3 col-sm-3 col-6">
+                  <label class="hrv-next-label--switch" for="checkbox-allow-order">Đồng ý cho đặt hàng khi đã hết hàng</label>
+                  <input id="checkbox-allow-order" type="checkbox" class="hrv-next-checkbox"  name="allowOrders" formControlName="allowOrders">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <button
+                 [disabled]="editForm.invalid || isSaving"
+                class="btn btn-submit me-2">Lưu</button>
+              <a
+                (click)="previousState()"
+                class="btn btn-cancel"
+              >
+                Hủy
+              </a>
+            </div>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>

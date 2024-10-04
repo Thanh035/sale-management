@@ -1,0 +1,124 @@
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-inner slimscroll">
+    <div id="sidebar-menu" class="sidebar-menu">
+      <ul>
+
+        <li *ngIf="roles?.includes('ROLE_ADMIN') || roles?.includes('ROLE_STAFF') || roles?.includes('ROLE_MANAGER')">
+          <a routerLink="/admin/dashboard">
+            <img src="content/admin/image/icons/dashboard.svg" alt="img">
+            <span>Tổng quan</span>
+          </a>
+        </li>
+
+        <li class="submenu" *ngIf="roles?.includes('ROLE_ADMIN') || roles?.includes('ROLE_STAFF') || roles?.includes('ROLE_MANAGER')">
+          <a (click)="toggleProductList()">
+            <img src="content/admin/image/icons/product.svg" alt="img">
+            <span>Sản Phẩm </span>
+            <span class="menu-arrow"></span>
+          </a>
+          <ul style="display: block;" *ngIf="productList">
+            <li>
+              <a routerLink="/admin/products">Tất cả sản phẩm</a>
+            </li>
+            <li>
+              <a routerLink="/admin/collections">Nhóm sản phẩm</a>
+            </li>
+            <!-- <li>
+              <a routerLink="/admin/brand-management">Bảng giá</a>
+            </li>
+            <li>
+              <a routerLink="/admin/brand-management">Tồn kho</a>
+            </li> -->
+
+          </ul>
+        </li>
+
+        <li class="submenu" *ngIf="roles?.includes('ROLE_ADMIN') || roles?.includes('ROLE_STAFF') || roles?.includes('ROLE_MANAGER')">
+          <a (click)="toggleSaleList()">
+            <img src="content/admin/image/icons/sales1.svg" alt="img">
+            <span>Đơn hàng</span>
+            <span class="menu-arrow"></span>
+          </a>
+          <ul *ngIf="saleList" style="display: block;">
+            <li>
+              <a routerLink="/admin/orders">Tất cả đơn hàng</a>
+            </li>
+            <li>
+              <a routerLink="/admin/draft_orders">Đơn hàng nháp</a>
+            </li>
+            <!-- <li>
+              <a routerLink="/admin/checkouts">Chưa hoàn tất</a>
+            </li>
+            <li>
+              <a routerLink="/admin/mass_fulfill">Giao hàng hàng loạt</a>
+            </li> -->
+          </ul>
+        </li>
+
+        <!-- <li class="submenu">
+          <a (click)="toggleUserList()">
+            <img src="content/admin/image/icons/users1.svg" alt="img">
+            <span>Khách hàng &nbsp;</span>
+            <span class="menu-arrow"></span>
+          </a>
+          <ul *ngIf="userList" style="display: block;">
+            <li>
+              <a routerLink="/admin/user-management">Người dùng </a>
+            </li>
+            <li>
+              <a routerLink="/admin/customers">Khách hàng</a>
+            </li>
+          </ul>
+        </li> -->
+
+
+        <!-- <li class="submenu">
+          <a (click)="toggleExpenseList()">
+            <img src="content/admin/image/icons/expense1.svg" alt="img">
+            <span> Số Quỹ</span>
+            <span class="menu-arrow"></span>
+          </a>
+          <ul *ngIf="expenseList" style="display: block;">
+            <li>
+              <a href="expenselist.html">Sổ quỹ</a>
+            </li>
+            <li>
+              <a href="createexpense.html">Công nợ</a>
+            </li>
+          </ul>
+        </li> -->
+
+        <li class="submenu" *ngIf="roles?.includes('ROLE_ADMIN') || roles?.includes('ROLE_STAFF') || roles?.includes('ROLE_MANAGER')">
+          <a routerLink="/admin/customers">
+            <img src="content/admin/image/icons/users1.svg" alt="img">
+            <span>Khách hàng</span>
+          </a>
+        </li>
+
+        <li class="submenu" *ngIf="roles?.includes('ROLE_ADMIN') || roles?.includes('ROLE_STAFF') || roles?.includes('ROLE_MANAGER')">
+          <a (click)="toggleReportList()">
+            <img src="content/admin/image/icons/time.svg" alt="img">
+            <span>Báo Cáo</span>
+            <span class="menu-arrow"></span>
+          </a>
+          <!-- <ul *ngIf="reportList" style="display: block;">
+            <li>
+              <a routerLink="/admin/reports">Bảng phân tích</a>
+            </li>
+            <li>
+              <a routerLink="/admin/reports/listing">Danh sách báo cáo</a>
+            </li>
+          </ul> -->
+        </li>
+
+        <li class="submenu" *ngIf="roles?.includes('ROLE_ADMIN')">
+          <a routerLink="/admin/settings">
+            <img src="content/admin/image/icons/settings.svg" alt="img">
+            <span>Cấu Hình</span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</div>

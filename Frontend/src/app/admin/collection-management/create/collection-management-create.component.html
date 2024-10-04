@@ -1,0 +1,81 @@
+<div class="page-wrapper" style="min-height: 922px;">
+  <div class="content">
+    <div class="page-header">
+      <div class="page-title">
+        <h4>Thông tin nhóm sản phẩm</h4>
+        <h6>VUI LÒNG CUNG CẤP CÁC THÔNG TIN VỀ NHÓM SẢN PHẨM SẼ TẠO MỚI</h6>
+      </div>
+    </div>
+    <div class="page-body">
+      <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+        <app-alert-error></app-alert-error>
+        <div class="card">
+          <div class="card-body">
+            <div class="ui-information-head">
+              <span class="ui-information-title font-weight-bold text-primary">Thông tin chung</span>
+            </div>
+            <hr>
+            <div class="ui-information-body">
+              <div class="row">
+                <div class="col-lg-6 col-sm-6 col-12">
+                  <div class="form-group">
+                    <label>Tên nhóm sản phẩm</label>
+                    <input type="text" formControlName="name" name="name" placeholder="Ví dụ: Nhóm Apple" required>
+
+                    <div *ngIf="editForm.get('name')!.invalid && (editForm.get('name')!.dirty || editForm.get('name')!.touched)">
+                      <small
+                        class="form-text text-danger"
+                        *ngIf="editForm.get('name')?.errors?.['maxlength']"
+                      >
+                        This field cannot be longer than 50 characters.
+                      </small>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label>Mô tả</label>
+                    <textarea class="form-control" name="description" formControlName="description"></textarea>
+
+                    <div *ngIf="editForm.get('description')!.invalid && (editForm.get('description')!.dirty || editForm.get('description')!.touched)">
+                      <small class="form-text text-danger" *ngIf="editForm.get('description')?.errors?.['required']">
+                        This field is required.
+                      </small>
+
+                      <small
+                        class="form-text text-danger"
+                        *ngIf="editForm.get('description')?.errors?.['maxlength']"
+                      >
+                        This field cannot be longer than 100 characters.
+                      </small>
+
+                      <small
+                        class="form-text text-danger"
+                        *ngIf="editForm.get('description')?.errors?.['minlength']"
+                      >
+                        This field is required to be at least 5 characters.
+                      </small>
+
+                      <small
+                        class="form-text text-danger"
+                        *ngIf="editForm.get('description')?.errors?.['description']"
+                      >
+                        Your description is invalid.
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <button type="submit" class="btn btn-submit me-2" [disabled]="isSaving || editForm.invalid">Lưu</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
+</div>
+

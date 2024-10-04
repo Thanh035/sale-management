@@ -1,0 +1,384 @@
+    <!-- <div class="col-md-8">
+      <h2 *ngIf="settingsForm.value.login">
+        User settings for [<strong>{{ settingsForm.value.login }}</strong
+        >]
+      </h2>
+
+      <div class="alert alert-success" *ngIf="success">
+        <strong>Settings saved!</strong>
+      </div>
+
+      <form name="form" role="form" (ngSubmit)="save()" [formGroup]="settingsForm" *ngIf="settingsForm.value.login" novalidate>
+        <div class="mb-3">
+          <label class="form-label" for="fullName">Full Name</label>
+          <input
+            type="text"
+            class="form-control"
+            id="fullName"
+            name="fullName"
+            formControlName="fullName"
+            data-cy="fullName"
+          />
+
+          <div
+            *ngIf="
+              settingsForm.get('fullName')!.invalid && (settingsForm.get('fullName')!.dirty || settingsForm.get('fullName')!.touched)
+            "
+          >
+            <small
+              class="form-text text-danger"
+              *ngIf="settingsForm.get('fullName')?.errors?.['required']"
+
+            >
+              Your full name is required.
+            </small>
+
+            <small
+              class="form-text text-danger"
+              *ngIf="settingsForm.get('fullName')?.errors?.['minlength']"
+
+            >
+              Your full name is required to be at least 1 character
+            </small>
+
+            <small
+              class="form-text text-danger"
+              *ngIf="settingsForm.get('fullName')?.errors?.['maxlength']"
+
+            >
+              Your full name cannot be longer than 50 characters
+            </small>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="email">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            name="email"
+            formControlName="email"
+            data-cy="email"
+          />
+
+          <div *ngIf="settingsForm.get('email')!.invalid && (settingsForm.get('email')!.dirty || settingsForm.get('email')!.touched)">
+            <small
+              class="form-text text-danger"
+              *ngIf="settingsForm.get('email')?.errors?.['required']"
+
+            >
+              Your email is required.
+            </small>
+
+            <small
+              class="form-text text-danger"
+              *ngIf="settingsForm.get('email')?.errors?.['email']"
+
+            >
+              Your email is invalid.
+            </small>
+
+            <small
+              class="form-text text-danger"
+              *ngIf="settingsForm.get('email')?.errors?.['minlength']"
+
+            >
+              Your email is required to be at least 5 characters.
+            </small>
+
+            <small
+              class="form-text text-danger"
+              *ngIf="settingsForm.get('email')?.errors?.['maxlength']"
+
+            >
+              Your email cannot be longer than 50 characters.
+            </small>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="settingsForm.invalid"
+          class="btn btn-primary"
+
+          data-cy="submit"
+        >
+          Save
+        </button>
+      </form>
+    </div>
+ -->
+
+
+ <div class="breadcrumb_nobackground margin-bottom-40">
+  <section class="bread-crumb">
+    <span class="crumb-border"></span>
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12 a-left">
+          <ul class="breadcrumb">
+            <li class="home">
+              <a href="/home">
+                <span>Trang chủ</span>
+              </a>
+              <span class="mr_lr">
+                <i class="fas fa-circle"></i>
+              </span>
+            </li>
+            <li>
+              <strong>
+                <span>Trang khách hàng</span>
+              </strong>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<section class="signup page_customer_account" *ngIf="account">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-12 col-main-acount">
+        <div id="parent" class="row">
+          <div id="a" class="col-xs-12 col-sm-12 col-lg-9 col-left-account">
+            <div class="page-title m992">
+              <h1 class="title-head margin-top-0">
+                <span>Thông tin tài khoản</span>
+              </h1>
+            </div>
+            <div class="form-signup name-account m992">
+              <p>
+                <strong>Xin chào, <a routerLink="addresses" style="color:#000000;">{{ account.fullname }}</a>&nbsp;! </strong>
+              </p>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-lg-12 no-padding">
+              <div class="my-account">
+                <div class="dashboard">
+                  <div class="recent-orders">
+                    <div class="table-responsive tab-all" style="overflow-x:auto;">
+                      <table class="table table-cart" id="my-orders-table">
+                        <thead class="thead-default">
+                          <tr>
+                            <th>Đơn hàng</th>
+                            <th>Ngày</th>
+                            <th>Địa chỉ</th>
+                            <th>Giá trị đơn hàng</th>
+                            <th>Tình trạng thanh toán</th>
+                            <th>Trạng thái</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr class="first odd">
+                            <td>
+                              <a href="/account/orders" title="">#2618</a>
+                            </td>
+                            <td>14/08/2020</td>
+                            <td> Hà Nội, Vietnam
+                              <!-- Hà Nội -->
+                            </td>
+                            <td>
+                              <span class="price">755.000₫</span>
+                            </td>
+                            <td>
+                              <!-- <em>
+
+Thanh toán một phần
+
+</em> -->
+                              <em> Thanh toán một phần </em>
+                            </td>
+                            <td> Bình thường </td>
+                          </tr>
+                          <tr class="first odd">
+                            <td>
+                              <a href="/account/orders" title="">#2111</a>
+                            </td>
+                            <td>05/06/2020</td>
+                            <td> Hà Nội, Vietnam
+                              <!-- Hà Nội -->
+                            </td>
+                            <td>
+                              <span class="price">790.000₫</span>
+                            </td>
+                            <td>
+                              <!-- <em>
+
+Thanh toán một phần
+
+</em> -->
+                              <em> Thanh toán một phần </em>
+                            </td>
+                            <td> Bình thường </td>
+                          </tr>
+                          <tr class="first odd">
+                            <td>
+                              <a href="/account/orders" title="">#1116</a>
+                            </td>
+                            <td>22/07/2019</td>
+                            <td> Hà Nội, Vietnam
+                              <!-- Hà Nội -->
+                            </td>
+                            <td>
+                              <span class="price">530.000₫</span>
+                            </td>
+                            <td>
+                              <!-- <em>
+
+Thanh toán một phần
+
+</em> -->
+                              <em> Thanh toán một phần </em>
+                            </td>
+                            <td> Bình thường </td>
+                          </tr>
+                          <tr class="first odd">
+                            <td>
+                              <a href="/account/orders" title="">#1181</a>
+                            </td>
+                            <td>14/09/2019</td>
+                            <td> Hà Nội, Vietnam
+                              <!-- Hà Nội -->
+                            </td>
+                            <td>
+                              <span class="price">1.375.000₫</span>
+                            </td>
+                            <td>
+                              <!-- <em>
+
+Thanh toán một phần
+
+</em> -->
+                              <em>
+                                <span style="color: red;">Đã hủy</span>
+                              </em>
+                            </td>
+                            <td>
+                              <span style="color: red;">Đã hủy</span>
+                            </td>
+                          </tr>
+                          <tr class="first odd">
+                            <td>
+                              <a href="/account/orders" title="">#1185</a>
+                            </td>
+                            <td>16/09/2019</td>
+                            <td> Hà Nội, Vietnam
+                              <!-- Hà Nội -->
+                            </td>
+                            <td>
+                              <span class="price">1.375.000₫</span>
+                            </td>
+                            <td>
+                              <!-- <em>
+
+Thanh toán một phần
+
+</em> -->
+                              <em> Thanh toán một phần </em>
+                            </td>
+                            <td> Bình thường </td>
+                          </tr>
+                          <tr class="first odd">
+                            <td>
+                              <a routerLink="/orders" title="">#1354</a>
+                            </td>
+                            <td>04/01/2020</td>
+                            <td> Hà Nội, Vietnam
+                              <!-- Hà Nội -->
+                            </td>
+                            <td>
+                              <span class="price">420.000₫</span>
+                            </td>
+                            <td>
+                              <!-- <em>
+
+Thanh toán một phần
+
+</em> -->
+                              <em>
+                                <span style="color: red;">Đã hủy</span>
+                              </em>
+                            </td>
+                            <td>
+                              <span style="color: red;">Đã hủy</span>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="text-xs-right"></div>
+                  </div>
+                  <div class="paginate-pages pull-right page-account">
+                    <nav class="clearfix">
+                      <ul class="pagination clearfix f-right">
+                        <li class="page-item disabled">
+                          <a class="page-link" href="#">«</a>
+                        </li>
+                        <li class="active page-item disabled">
+                          <a class="page-link" href="#">1</a>
+                        </li>
+                        <li class="page-item disabled">
+                          <a class="page-link" href="#">»</a>
+                        </li>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="b" class="col-xs-12 col-sm-12 col-lg-3 col-right-account margin-top-20">
+            <div class="page-title mx991">
+              <h1 class="title-head">
+                <span>Thông tin tài khoản</span>
+              </h1>
+            </div>
+            <div class="form-signup body_right mx991">
+              <p>
+                <strong>Xin chào, <a routerLink="addresses" style="color:#000000;">Lê quang</a>&nbsp;! </strong>
+              </p>
+            </div>
+            <div class="block-account">
+              <div class="block-title-account">
+                <h5>Tài khoản của tôi</h5>
+              </div>
+              <div class="block-content form-signup">
+                <p>Tên tài khoản: <strong style="line-height: 20px;"> Lê quang!</strong>
+                </p>
+                <p>
+                  <i class="fa fa-home font-some" aria-hidden="true"></i>
+                  <span>Địa chỉ: Hà Nội</span>
+                </p>
+                <p>
+                  <i class="fa fa-mobile font-some" aria-hidden="true"></i>
+                  <span>Điện thoại: 0364504982</span>
+                </p>
+                <p>
+                  <i class="fa fa-map-marker font-some" aria-hidden="true"></i>
+                  <span> Địa chỉ 1: Bưu cục ghtk Liên Lý</span>
+                </p>
+                <p>
+                  <i class="fa fa-yelp font-some" aria-hidden="true"></i>
+                  <span> Công ty: </span>
+                </p>
+                <p>
+                  <i class="fa fa-plane font-some" aria-hidden="true"></i>
+                  <span> Quốc gia :Vietnam</span>
+                </p>
+                <p>
+                  <i class="fa fa-code font-some" aria-hidden="true"></i>
+                  <span> Zip code: </span>
+                </p>
+                <p style="margin-top:20px;">
+                  <a routerLink="addresses" class="btn btn-full btn-primary">Sổ địa chỉ (2)</a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

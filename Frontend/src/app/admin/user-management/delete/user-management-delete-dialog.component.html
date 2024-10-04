@@ -1,0 +1,37 @@
+<form *ngIf="user" name="deleteForm" (ngSubmit)="confirmDelete(user.id!)">
+  <div class="modal-header">
+    <h4 class="modal-title">Xóa người dùng</h4>
+
+    <button type="button" class="btn-close" data-dismiss="modal" aria-hidden="true" (click)="cancel()">&times;</button>
+  </div>
+
+  <div class="modal-body">
+    <app-alert-error></app-alert-error>
+
+    <div class="pd-all-20">
+      <div class="mb-2 word-break">
+        <span>Bạn có muốn xóa người dùng&nbsp; <strong class="text-danger">{{ user.fullname }}</strong>
+        </span>
+      </div>
+      <div>Người dùng đã xóa không thể khôi phục được</div>
+    </div>
+
+  </div>
+
+  <div class="modal-footer">
+    <a type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+      <span>Hủy</span>
+    </a>
+
+    <button type="submit" class="btn btn-danger">
+      <span>Xóa</span>
+    </button>
+  </div>
+</form>
+
+
+
+
+
+
+
