@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "point-of-sale-management",
+  "private_key_id": "733b6b92e593cc17def4821e591905aac919d45c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDACuE4t1Xw+iuQ\nkrRQfPC5C+bwMH0G3BSUjK74X0+4kyibz7AmT0nnBKcl2TJrT4xQD56VfjlsOabI\nt8AuPjD2FSiAXNwWLYoWcjpAaGcpiM4xUSdf8OqgI/h86DrVj+e/WoV2OmJEfoi2\n8cvETdZ11jgEigjTdD9zBrE0KkZv9JolFqEHwUrb4218yATZMpuoVWTFnQa+p+3T\nZZcoh6sXBKkHdSu6Exqv+i8QDMqJgW4Iz31VSsHlaSxPhDIz/1ud0nk6yhnNQZ7z\nb0lNdYAiOJjAyZIFQtL0l0cyokOkz9KXGUVMLuff/15Yd/V9mLPVjZkbu/txTv/N\nTKh3fXK7AgMBAAECggEAC1rZVEQq1bPFDahO9w9cIGTew8bqLZSnttzWn6LrEMvK\ns+PE048OnJU+2NMN0yCB+F3kD4zGEmsaPHX47AMLXBGGMojLDpikuI0KerJxnxgS\nsQHOZTLWfJ+D2sbUa7o1hq/wgjwTgV9F8CM93B6KFq+S4lnTCcWu1rtHkQEK5yWi\nEZ5wewUjdk90GGxo8GkrKQ3fAIt7abbIXGk/70NCSFKxSBsyq0TwM6sqvNIThk2E\nYn3UEhFIGHp38jv1S9M/K+wuoluY7D26kXu9sbAb5ZozLUPxcRFnXkWA+l+cTK7U\ntiuHRCzsYnmr+aZ0NOgvsXbv3ciYyyrXM0ZHNlzt2QKBgQDp4NCO9vZcIec6efOr\nugrDSC6osFzLOSWVt8Xyc8uYDbnzEVyfKuDQ0CQykkGIDvSWTuz9ObvGoJlH/hqR\n/OJChKSGuAK1xk43NQ57shJmIy+n6DM821OPudGSCXyVLAxq4YL1KHriT6jYClmH\nhCaxku3RIyzlKklV3QpoZ9CDpwKBgQDSNQuYzo4fDlroslRbciAk3RPFPQ5KX4JW\n1wIfa4W7ugQdKtmJ0eGoowg8C9hRUXSNNGuc/Baq0W0Y7M16+B5JlBooQG9O5a1j\nsyBx0KXrkmsglHd/+Q6dTAYJuz42i5VEGbmg9LgDwPUujNoP8NS8Uix6CIQVCawf\nQvCg3pSKzQKBgCYDYGKcSVaYPBkJEU3sIyuyY8MPR0XQuAcpo4bQw1qngH29aKyG\nL5xA+GEv3G7c32w+z84owBh8qe1Fo9PuomflX0h2SBp7bOMUQJJiUxM+zNQhrZJK\no75MmX9/AzzLuAj3Nm3acn6uK+dRZ1Pbat6Z3wWLDhUBVoIaN0LY/M8pAoGBAMIV\nVBXMcRBfkrRTIuwj3WXr8XslOnKU6KUBc+ZKwnln8LB1hdFoRbAMh2fZj+rVCIXv\npoSVhOBG6TIgQkCNonlREy2jAKKaEZOCKiyr9uYglGTKb+Nqs4GsVc7aYUC/dBwi\nnG/uQ5DDsh0+03/wXptaS9KI1lsOSSu8BKyjlgbpAoGBAKcTDdkeyzD0LcwFEXBc\nVV2rAgIx0or7jNbwFAIrdPFwji/e9+jDf72yMPJ+W6JDqPwY/10rgbIbcuHeGM4n\nvd0upcibIpKkkWHs8CrUumiJPfmLB0jw408o/gPL7kUSxFigesB4mtSCrZsEEClQ\n10okm8QZA0Vz0QjwEV3scB+Z\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-q3377@point-of-sale-management.iam.gserviceaccount.com",
+  "client_id": "112570178979902723290",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-q3377%40point-of-sale-management.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
