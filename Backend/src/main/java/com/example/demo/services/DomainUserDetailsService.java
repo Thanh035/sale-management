@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.exception.UserNotActivatedException;
-import com.example.demo.domain.entities.Role;
+import com.example.demo.domain.entities.Group;
 import com.example.demo.domain.entities.User;
 import com.example.demo.repositories.UserRepository;
 
@@ -35,13 +35,13 @@ public class DomainUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(final String login) throws UsernameNotFoundException {
 		log.debug("Authenticating {}", login);
 		if (new EmailValidator().isValid(login, null)) {
-			return userRepository.findOneWithRolesByEmailIgnoreCase(login)
+			return userRepository.findOneWithGroupsByEmailIgnoreCase(login)
 					.map(user -> createSpringSecurityUser(login, user)).orElseThrow(() -> new UsernameNotFoundException(
 							"User with email " + login + " was not found in the database"));
 		}
 
 		String lowercaseLogin = login.toLowerCase(Locale.ENGLISH);
-		return userRepository.findOneWithRolesByLogin(lowercaseLogin)
+		return userRepository.findOneWithGroupsByLogin(lowercaseLogin)
 				.map(user -> createSpringSecurityUser(lowercaseLogin, user))
 				.orElseThrow(() -> new UsernameNotFoundException(
 						"User " + lowercaseLogin + " was not found in the database"));
@@ -52,7 +52,7 @@ public class DomainUserDetailsService implements UserDetailsService {
 			throw new UserNotActivatedException("User: " + lowercaseLogin + " was not activated");
 		}
 
-		List<GrantedAuthority> grantedAuthorities = user.getRoles().stream().map(Role::getCode)
+		List<GrantedAuthority> grantedAuthorities = user.getGroups().stream().map(Group::getCode)
 				.map(SimpleGrantedAuthority::new).collect(Collectors.toList());
 
 		return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(),

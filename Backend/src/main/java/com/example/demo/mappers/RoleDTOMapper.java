@@ -6,16 +6,16 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.dto.admin.role.RoleDTO;
-import com.example.demo.domain.entities.Role;
+import com.example.demo.domain.entities.Group;
 
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class RoleDTOMapper implements Function<Role, RoleDTO> {
+public class RoleDTOMapper implements Function<Group, RoleDTO> {
 
 	@Override
-	public RoleDTO apply(Role t) {
+	public RoleDTO apply(Group t) {
 		RoleDTO dto = new RoleDTO();
 		BeanUtils.copyProperties(t, dto);
 		return dto;

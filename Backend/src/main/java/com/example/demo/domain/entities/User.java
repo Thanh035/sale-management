@@ -2,7 +2,10 @@ package com.example.demo.domain.entities;
 
 import com.example.demo.constants.Constants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.BatchSize;
 
 import javax.persistence.*;
@@ -22,7 +25,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "tbl_user")
+@Table(name = "users")
 public class User extends AbstractAuditingEntity<Long> implements Serializable {
 
     /**
@@ -31,6 +34,7 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Long id;
     @NotNull
     @Pattern(regexp = Constants.LOGIN_REGEX)
@@ -76,24 +80,24 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
 
     @JsonIgnore
     @ManyToMany
-    @JoinTable(name = "tbl_user_role", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"), inverseJoinColumns = {
-            @JoinColumn(name = "role_id", referencedColumnName = "id")})
+    @JoinTable(name = "user_groups", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "user_id"), inverseJoinColumns = {
+            @JoinColumn(name = "group_id", referencedColumnName = "group_id")})
     @BatchSize(size = 20)
-    private Set<Role> roles = new HashSet<>();
+    private Set<Group> groups = new HashSet<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user",cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
     private List<LoginHistory> loginHistories = new ArrayList<>();
 
     public User(String login, String fullName, String email, boolean activated, String phoneNumber, String password,
-                Set<Role> roles) {
+                Set<Group> groups) {
         this.login = login;
         this.fullname = fullName;
         this.email = email;
         this.activated = activated;
         this.phoneNumber = phoneNumber;
         this.password = password;
-        this.roles = roles;
+        this.groups = groups;
     }
 
     public User(String login, String fullName, String email, boolean activated, String phoneNumber, String password) {

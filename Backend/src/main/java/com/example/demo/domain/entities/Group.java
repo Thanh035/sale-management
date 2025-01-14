@@ -21,13 +21,14 @@ import lombok.ToString;
 @Entity
 @EqualsAndHashCode
 @ToString
-@Table(name = "tbl_role")
-public class Role extends AbstractAuditingEntity<Long> implements Serializable {
+@Table(name = "groups")
+public class Group extends AbstractAuditingEntity<Long> implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "group_id")
 	private Long id;
 
 	@NotNull

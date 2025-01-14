@@ -29,11 +29,11 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findOneByLogin(String login);
 
-    @EntityGraph(attributePaths = "roles")
-    Optional<User> findOneWithRolesByEmailIgnoreCase(String email);
+    @EntityGraph(attributePaths = "groups")
+    Optional<User> findOneWithGroupsByEmailIgnoreCase(String email);
 
-    @EntityGraph(attributePaths = "roles")
-    Optional<User> findOneWithRolesByLogin(String login);
+    @EntityGraph(attributePaths = "groups")
+    Optional<User> findOneWithGroupsByLogin(String login);
 
     Optional<User> findOneByResetKey(String resetKey);
 

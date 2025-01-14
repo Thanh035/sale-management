@@ -15,10 +15,10 @@ import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.mappers.SecurityInfoMapper;
 import com.example.demo.mappers.UserDTOMapper;
 import com.example.demo.domain.entities.LoginHistory;
-import com.example.demo.domain.entities.Role;
+import com.example.demo.domain.entities.Group;
 import com.example.demo.domain.entities.User;
 import com.example.demo.repositories.LoginHistoryRepository;
-import com.example.demo.repositories.RoleRepository;
+import com.example.demo.repositories.GroupRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.utils.RandomUtil;
 import com.example.demo.utils.SecurityUtil;
@@ -49,7 +49,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final LoginHistoryRepository loginHistoryRepository;
     private final PasswordEncoder passwordEncoder;
-    private final RoleRepository roleRepository;
+    private final GroupRepository groupRepository;
     private final UserDTOMapper userDTOMapper;
 
     private final SecurityInfoMapper securityInfoMapper;
@@ -73,7 +73,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public Optional<UserDTO> getUserWithRolesByLogin(String login) {
-        return userRepository.findOneWithRolesByLogin(login).map(userDTOMapper);
+        return userRepository.findOneWithGroupsByLogin(login).map(userDTOMapper);
     }
 
     @Transactional(readOnly = true)
@@ -84,14 +84,14 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public AccountDTO getUserFromAuthentication() {
-        return SecurityUtil.getCurrentUserLogin().flatMap(userRepository::findOneWithRolesByLogin)
+        return SecurityUtil.getCurrentUserLogin().flatMap(userRepository::findOneWithGroupsByLogin)
                 .map(userDTOMapper::toAccountDTO)
                 .orElseThrow(() -> new ResourceNotFoundException("User could not be found"));
     }
 
     @Transactional(readOnly = true)
     public List<String> getRoles() {
-        return roleRepository.findAll().stream().map(Role::getCode).collect(Collectors.toList());
+        return groupRepository.findAll().stream().map(Group::getCode).collect(Collectors.toList());
     }
 
     public UserDTO createUser(UserCreateDTO newUserRequest) {
@@ -123,10 +123,10 @@ public class UserService {
             BeanUtils.copyProperties(updateRequest, user);
 
             if (updateRequest.getRoles() != null) {
-                Set<Role> managedRoles = user.getRoles();
-                managedRoles.clear();
-                updateRequest.getRoles().stream().map(roleRepository::findOneByCode).filter(Optional::isPresent)
-                        .map(Optional::get).forEach(managedRoles::add);
+                Set<Group> managedGroups = user.getGroups();
+                managedGroups.clear();
+                updateRequest.getRoles().stream().map(groupRepository::findOneByCode).filter(Optional::isPresent)
+                        .map(Optional::get).forEach(managedGroups::add);
             }
 
             this.clearUserCaches(user);
@@ -184,9 +184,9 @@ public class UserService {
 
         newUser.setActivationKey(RandomUtil.generateActivationKey());
 
-        Set<Role> roles = new HashSet<>();
-        roleRepository.findOneByCode(RolesConstants.USER).ifPresent(roles::add);
-        newUser.setRoles(roles);
+        Set<Group> groups = new HashSet<>();
+        groupRepository.findOneByCode(RolesConstants.USER).ifPresent(groups::add);
+        newUser.setGroups(groups);
         userRepository.save(newUser);
         mailService.sendActivationEmail(newUser);
         log.debug("Created Information for User: {}", newUser);
