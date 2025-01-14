@@ -32,5 +32,5 @@ build/
 ### VS Code ###
 .vscode/
 
-###secret key
-!**/src/main/resources/google-services.json
+src/main/resources/google-services.json
+
