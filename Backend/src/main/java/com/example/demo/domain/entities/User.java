@@ -33,13 +33,14 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
      */
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
     @Column(name = "user_id")
     private Long id;
     @NotNull
     @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1, max = 50)
-    @Column(length = 50, unique = true, nullable = false)
+    @Column(length = 50, unique = true, nullable = false,name = "user_name")
     private String login;
     @JsonIgnore
     @NotNull
@@ -47,7 +48,7 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @Column(name = "password_hash", length = 60, nullable = false)
     private String password;
     @Size(max = 100)
-    @Column(name = "fullname", length = 100)
+    @Column(name = "full_name", length = 100)
     private String fullname;
     @Email
     @Size(min = 5, max = 254)

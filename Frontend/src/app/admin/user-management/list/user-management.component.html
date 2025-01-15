@@ -61,7 +61,7 @@
                   {{ user.email }}
                 </td>
                 <td>
-                  {{ user.roles.includes('ROLE_ADMIN') ? 'Toàn quyền' : (user.roles.length > 0 ? '
+                  {{ user.roles.includes('Admin') ? 'Toàn quyền' : (user.roles.length > 0 ? '
                   Giới hạn quyền' : 'Không có quyền') }}
                 </td>
                 <td>

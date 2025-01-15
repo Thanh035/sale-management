@@ -1,13 +1,12 @@
 package com.example.demo.repositories;
 
-import java.util.Optional;
-
+import com.example.demo.domain.entities.Group;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.demo.domain.entities.Group;
+import java.util.Optional;
 
 public interface GroupRepository extends JpaRepository<Group, Long> {
 
-	Optional<Group> findOneByCode(String code);
+    Optional<Group> findByGroupName(String groupName);
 
 }

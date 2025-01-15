@@ -1,7 +1,7 @@
 export interface RoleDTO {
   id: number;
-  name: string;
-  code: string;
+  groupName: string;
+  groupCode: string;
   createdDate: Date;
   createdBy: string;
 }
