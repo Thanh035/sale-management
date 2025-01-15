@@ -1,71 +1,95 @@
 package com.example.demo.config;
-
+import com.example.demo.constants.RolesConstants;
+import com.example.demo.security.SpaWebFilter;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
+import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.header.writers.ReferrerPolicyHeaderWriter;
-import org.springframework.web.filter.CorsFilter;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
-import com.example.demo.constants.RolesConstants;
-import com.example.demo.security.jwt.JWTConfigurer;
-import com.example.demo.security.jwt.TokenProvider;
+import static org.springframework.security.config.Customizer.withDefaults;
 
-import lombok.RequiredArgsConstructor;
-
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-@RequiredArgsConstructor
+@Configuration
+@EnableMethodSecurity(securedEnabled = true)
 public class SecurityConfiguration {
 
-	private final TokenProvider tokenProvider;
+	private final SupportProperties supportProperties;
 
-	private final CorsFilter corsFilter;
+	public SecurityConfiguration(SupportProperties supportProperties) {
+		this.supportProperties = supportProperties;
+	}
 
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
 
-	private JWTConfigurer securityConfigurerAdapter() {
-		return new JWTConfigurer(tokenProvider);
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
+		http
+				.cors(withDefaults())
+				.csrf(AbstractHttpConfigurer::disable)
+				.addFilterAfter(new SpaWebFilter(), BasicAuthenticationFilter.class)
+				.headers(headers ->
+						headers
+								.contentSecurityPolicy(csp -> csp.policyDirectives(supportProperties.getSecurity().getContentSecurityPolicy()))
+								.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
+								.referrerPolicy(referrer -> referrer.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN))
+								.permissionsPolicy(permissions ->
+										permissions.policy(
+												"camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()"
+										)
+								)
+				)
+				.authorizeHttpRequests(authz ->
+						// prettier-ignore
+						authz
+								.requestMatchers(mvc.pattern("/index.html"), mvc.pattern("/*.js"), mvc.pattern("/*.map"), mvc.pattern("/*.css")).permitAll()
+								.requestMatchers(mvc.pattern("/app/**")).permitAll()
+								.requestMatchers(mvc.pattern("/i18n/**")).permitAll()
+								.requestMatchers(mvc.pattern("/swagger-ui/**")).permitAll()
+								.requestMatchers(mvc.pattern(HttpMethod.OPTIONS, "/ping")).permitAll()
+								.requestMatchers(mvc.pattern(HttpMethod.POST, "/api/auth/login")).permitAll()
+								.requestMatchers(mvc.pattern(HttpMethod.GET, "/api/auth/login")).permitAll()
+								.requestMatchers(mvc.pattern(HttpMethod.POST, "/api/auth/register")).permitAll()
+
+								.requestMatchers(mvc.pattern("/api/v1.0/account/reset-password/init")).permitAll()
+								.requestMatchers(mvc.pattern("/api/v1.0/account/reset-password/finish")).permitAll()
+								.requestMatchers(mvc.pattern("/api/v1.0/admin/**")).hasAuthority(RolesConstants.ADMIN)
+								.requestMatchers(mvc.pattern("/api/v1.0/**")).authenticated()
+								.requestMatchers(mvc.pattern("/v1.0/api-docs/**")).hasAuthority(RolesConstants.ADMIN)
+								.requestMatchers(mvc.pattern("/management/health")).permitAll()
+								.requestMatchers(mvc.pattern("/management/health/**")).permitAll()
+								.requestMatchers(mvc.pattern("/management/info")).permitAll()
+								.requestMatchers(mvc.pattern("/management/prometheus")).permitAll()
+								.requestMatchers(mvc.pattern("/management/**")).hasAuthority(RolesConstants.ADMIN)
+				)
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.exceptionHandling(exceptions ->
+						exceptions
+								.authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
+								.accessDeniedHandler(new BearerTokenAccessDeniedHandler())
+				)
+				.oauth2ResourceServer(oauth2 -> oauth2.jwt(Customizer.withDefaults()));
+		return http.build();
 	}
 
 	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-		// @formatter:off
-		http.csrf().disable().addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
-				.exceptionHandling()
-//					.authenticationEntryPoint(problemSupport)
-//					.accessDeniedHandler(problemSupport)
-				.and().headers()
-				.contentSecurityPolicy(
-						"default-src 'self'; frame-src 'self' data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://storage.googleapis.com; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self' data:")
-				.and().referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN).and()
-				.permissionsPolicy()
-				.policy("camera=(), fullscreen=(self), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), midi=(), payment=(), sync-xhr=()")
-				.and().frameOptions().sameOrigin().and().sessionManagement()
-				.sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
-				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll().antMatchers("/app/**/*.{js,html}").permitAll()
-				.antMatchers("/i18n/**").permitAll().antMatchers("/**").permitAll()
-				.antMatchers("/swagger-ui/**").permitAll().antMatchers("/test/**").permitAll()
-				.antMatchers("/api/v1.0/authenticate").permitAll().antMatchers("/api/v1.0/register").permitAll()
-				.antMatchers("/api/v1.0/activate").permitAll().antMatchers("/api/v1.0/account/reset-password/init")
-				.permitAll().antMatchers("/api/v1.0/account/reset-password/finish").permitAll()
-				.antMatchers("/api/v1.0/admin/**").hasAuthority(RolesConstants.ADMIN).antMatchers("/api/v1.0/**")
-				.permitAll().and().httpBasic().and().apply(securityConfigurerAdapter());
-
-//		http.requiresChannel(channel -> channel.anyRequest().requiresSecure())
-//				.authorizeRequests(authorize -> authorize.anyRequest().permitAll());
-
-		return http.build();
-		// @formatter:on
+	MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
+		return new MvcRequestMatcher.Builder(introspector);
 	}
-
 }
+

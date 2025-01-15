@@ -2,17 +2,17 @@ package com.example.demo.domain.entities;
 
 import com.example.demo.constants.Constants;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.BatchSize;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -40,7 +40,7 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
     @NotNull
     @Pattern(regexp = Constants.LOGIN_REGEX)
     @Size(min = 1, max = 50)
-    @Column(length = 50, unique = true, nullable = false,name = "user_name")
+    @Column(length = 50, unique = true, nullable = false, name = "user_name")
     private String login;
     @JsonIgnore
     @NotNull
@@ -108,6 +108,14 @@ public class User extends AbstractAuditingEntity<Long> implements Serializable {
         this.activated = activated;
         this.phoneNumber = phoneNumber;
         this.password = password;
+    }
+
+    public User(String fullName, String email, String userName, String password, Set<Group> groups) {
+        this.fullname = fullName;
+        this.email = email;
+        this.login = userName;
+        this.password = password;
+        this.groups = groups;
     }
 
 }

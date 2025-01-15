@@ -31,7 +31,7 @@ export class AuthServerProvider {
 
   login(credentials: Login): Observable<void> {
     return this.http
-      .post<JwtToken>(this.applicationConfigService.getEndpointFor('api/v1.0/authenticate'), credentials)
+      .post<JwtToken>(this.applicationConfigService.getEndpointFor('api/auth/login'), credentials)
       .pipe(map(response => this.authenticateSuccess(response, credentials.rememberMe)));
   }
 

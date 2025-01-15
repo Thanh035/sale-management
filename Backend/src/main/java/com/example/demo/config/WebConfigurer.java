@@ -1,77 +1,65 @@
 package com.example.demo.config;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.boot.web.server.WebServerFactory;
-import org.springframework.boot.web.server.WebServerFactoryCustomizer;
-import org.springframework.boot.web.servlet.ServletContextInitializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
 
+/**
+ * Configuration of web application with Servlet 3.0 APIs.
+ */
 @Configuration
-@RequiredArgsConstructor
-@Slf4j
-public class WebConfigurer implements ServletContextInitializer, WebServerFactoryCustomizer<WebServerFactory> {
+public class WebConfigurer {
 
-	private final Environment env;
+    private final Logger log = LoggerFactory.getLogger(WebConfigurer.class);
+    @Value("#{'${cors.allowed-origins}'.split(',')}")
+    private List<String> allowedOrigins;
 
-	@Override
-	public void onStartup(ServletContext servletContext) throws ServletException {
-		if (env.getActiveProfiles().length != 0) {
-			log.info("Web application configuration, using profiles: {}", (Object[]) env.getActiveProfiles());
-		}
+    @Value("#{'${cors.allowed-methods}'.split(',')}")
+    private List<String> allowedMethods;
 
-		log.info("Web application fully configured");
-	}
+    @Value("#{'${cors.allowed-headers}'.split(',')}")
+    private List<String> allowedHeaders;
 
-	@Bean
-	public CorsFilter corsFilter() {
-		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-		CorsConfiguration config = new CorsConfiguration();
-		config.addAllowedOrigin("http://localhost:4200");
-		config.addAllowedOrigin("https://localhost:4200");
-		config.addAllowedOrigin("blob:http://localhost:4200");
-		config.addAllowedOrigin("blob:http://localhost:4200");
-		
-		config.addAllowedMethod("*");
-		config.addAllowedHeader("*");
-		config.addExposedHeader("Authorization,Link,X-Total-Count,X-FoodDeliveryBySpringBoot-alert,X-FoodDeliveryBySpringBoot-error,X-FoodDeliveryBySpringBoot-params");
-		config.setAllowCredentials(true);
-		config.setMaxAge((long) 1800);
+    @Value("#{'${cors.exposed-headers}'.split(',')}")
+    private List<String> expectedHeaders;
 
-		if (!CollectionUtils.isEmpty(config.getAllowedOrigins())
-				|| !CollectionUtils.isEmpty(config.getAllowedOriginPatterns())) {
-			log.debug("Registering CORS filter");
-			source.registerCorsConfiguration("/api/**", config);
-			source.registerCorsConfiguration("/management/**", config);
-			source.registerCorsConfiguration("/v3/api-docs", config);
-			source.registerCorsConfiguration("/swagger-ui/**", config);
-		}
-		return new CorsFilter(source);
-	}
+    @Bean
+    public CorsFilter corsFilter() {
+        CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedOrigins(allowedOrigins);
+        config.setAllowedMethods(allowedMethods);
+        config.setAllowedHeaders(allowedHeaders);
+        config.setExposedHeaders(expectedHeaders);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        if (!CollectionUtils.isEmpty(config.getAllowedOrigins()) || !CollectionUtils.isEmpty(config.getAllowedOriginPatterns())) {
+            log.debug("Registering CORS filter");
+            source.registerCorsConfiguration("/management/**", config);
+            source.registerCorsConfiguration("/v3/api-docs", config);
+            source.registerCorsConfiguration("/swagger-ui/**", config);
+            source.registerCorsConfiguration("/ping", config);
+            source.registerCorsConfiguration("/api/**", config);
+        }
+        return new CorsFilter(source);
+    }
 
-	@Override
-	public void customize(WebServerFactory server) {
-		// When running in an IDE or with ./mvnw spring-boot:run, set location of the
-		// static web assets.
-	}
-
-	@Bean
-	public ModelMapper modelMapper() {
-		ModelMapper modelMapper = new ModelMapper();
-		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-		return modelMapper;
-	}
-
+    @Bean
+    public ModelMapper modelMapper() {
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        return modelMapper;
+    }
 }
+
+
+
+

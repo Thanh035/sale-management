@@ -21,7 +21,8 @@ import com.example.demo.repositories.GroupRepository;
 import com.example.demo.repositories.LoginHistoryRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.utils.RandomUtil;
-import com.example.demo.utils.SecurityUtil;
+import com.example.demo.utils.SecurityUtils;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -34,7 +35,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -84,9 +84,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public AccountDTO getUserFromAuthentication() {
-        return SecurityUtil.getCurrentUserLogin().flatMap(userRepository::findOneWithGroupsByLogin)
-                .map(userDTOMapper::toAccountDTO)
-                .orElseThrow(() -> new ResourceNotFoundException("User could not be found"));
+        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneWithGroupsByLogin).map(userDTOMapper::toAccountDTO).orElseThrow(() -> new ResourceNotFoundException("User could not be found"));
     }
 
     @Transactional(readOnly = true)
@@ -125,8 +123,7 @@ public class UserService {
             if (updateRequest.getRoles() != null) {
                 Set<Group> managedGroups = user.getGroups();
                 managedGroups.clear();
-                updateRequest.getRoles().stream().map(groupRepository::findByGroupName).filter(Optional::isPresent)
-                        .map(Optional::get).forEach(managedGroups::add);
+                updateRequest.getRoles().stream().map(groupRepository::findByGroupName).filter(Optional::isPresent).map(Optional::get).forEach(managedGroups::add);
             }
 
             this.clearUserCaches(user);
@@ -145,7 +142,7 @@ public class UserService {
     }
 
     public void updateUser(AccountUpdateDTO request) {
-        SecurityUtil.getCurrentUserLogin().flatMap(userRepository::findOneByLogin).ifPresent(user -> {
+        SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLogin).ifPresent(user -> {
             user.setFullname(request.getFullname());
             user.setPhoneNumber(request.getPhoneNumber());
             this.clearUserCaches(user);
@@ -195,25 +192,22 @@ public class UserService {
 
     @Transactional
     public void changePassword(String currentClearTextPassword, String newPassword) {
-        SecurityUtil
-                .getCurrentUserLogin()
-                .flatMap(userRepository::findOneByLogin)
-                .ifPresent(user -> {
-                    String currentEncryptedPassword = user.getPassword();
-                    if (!passwordEncoder.matches(currentClearTextPassword, currentEncryptedPassword)) {
+        SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLogin).ifPresent(user -> {
+            String currentEncryptedPassword = user.getPassword();
+            if (!passwordEncoder.matches(currentClearTextPassword, currentEncryptedPassword)) {
 //                        throw new InvalidPasswordException();
-                        throw new RequestValidationException("Incorect password");
-                    }
-                    String encryptedPassword = passwordEncoder.encode(newPassword);
-                    user.setPassword(encryptedPassword);
-                    this.clearUserCaches(user);
-                    log.debug("Changed password for User: {}", user);
-                });
+                throw new RequestValidationException("Incorect password");
+            }
+            String encryptedPassword = passwordEncoder.encode(newPassword);
+            user.setPassword(encryptedPassword);
+            this.clearUserCaches(user);
+            log.debug("Changed password for User: {}", user);
+        });
     }
 
     @Transactional
     public void updateLoginInfo() {
-        SecurityUtil.getCurrentUserLogin().flatMap(userRepository::findOneByLogin).ifPresent(user -> {
+        SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLogin).ifPresent(user -> {
             LoginHistory loginHistory = new LoginHistory();
             loginHistory.setSignInBrowser(request.getHeader("User-Agent"));
             loginHistory.setSignInIp(request.getRemoteAddr());
@@ -225,18 +219,11 @@ public class UserService {
     }
 
     public void requestPasswordReset(String email) {
-        userRepository
-                .findOneByEmailIgnoreCase(email)
-                .filter(User::isActivated)
-                .map(user -> {
-                    user.setResetKey(RandomUtil.generateResetKey());
-                    user.setResetDate(Instant.now());
-                    return user;
-                })
-                .ifPresentOrElse(
-                        user -> mailService.sendPasswordResetMail(user),
-                        () -> log.warn("Password reset requested for non-existing email: {}", email)
-                );
+        userRepository.findOneByEmailIgnoreCase(email).filter(User::isActivated).map(user -> {
+            user.setResetKey(RandomUtil.generateResetKey());
+            user.setResetDate(Instant.now());
+            return user;
+        }).ifPresentOrElse(user -> mailService.sendPasswordResetMail(user), () -> log.warn("Password reset requested for non-existing email: {}", email));
 
 
     }
@@ -246,14 +233,13 @@ public class UserService {
         if (isPasswordLengthInvalid(newPassword)) {
             throw new RequestValidationException("Incorrect password");
         }
-        userRepository.findOneByResetKey(key)
-                .filter(user -> user.getResetDate().isAfter(Instant.now().minus(1, ChronoUnit.DAYS))).map(user -> {
-                    user.setPassword(passwordEncoder.encode(newPassword));
-                    user.setResetKey(null);
-                    user.setResetDate(null);
-                    user.setActivated(true);
-                    return user;
-                }).orElseThrow(() -> new ResourceNotFoundException("No user was found for this reset key"));
+        userRepository.findOneByResetKey(key).filter(user -> user.getResetDate().isAfter(Instant.now().minus(1, ChronoUnit.DAYS))).map(user -> {
+            user.setPassword(passwordEncoder.encode(newPassword));
+            user.setResetKey(null);
+            user.setResetDate(null);
+            user.setActivated(true);
+            return user;
+        }).orElseThrow(() -> new ResourceNotFoundException("No user was found for this reset key"));
     }
 
     public UserDTO activateRegistration(String key) {
@@ -269,8 +255,7 @@ public class UserService {
 
     @Scheduled(cron = "0 0 1 * * ?")
     public void removeNotActivatedUsers() {
-        userRepository.findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(
-                Instant.now().minus(3, ChronoUnit.DAYS)).forEach(user -> {
+        userRepository.findAllByActivatedIsFalseAndActivationKeyIsNotNullAndCreatedDateBefore(Instant.now().minus(3, ChronoUnit.DAYS)).forEach(user -> {
             log.debug("Deleting not activated user {}", user.getEmail());
             userRepository.delete(user);
         });
@@ -286,8 +271,7 @@ public class UserService {
     }
 
     private static boolean isPasswordLengthInvalid(String password) {
-        return (StringUtils.isEmpty(password) || password.length() < UserRegistrationRequest.PASSWORD_MIN_LENGTH
-                || password.length() > UserRegistrationRequest.PASSWORD_MAX_LENGTH);
+        return (StringUtils.isEmpty(password) || password.length() < UserRegistrationRequest.PASSWORD_MIN_LENGTH || password.length() > UserRegistrationRequest.PASSWORD_MAX_LENGTH);
     }
 
     private void checkIfLoginAlreadyOrThrow(String login) {
@@ -312,8 +296,7 @@ public class UserService {
         checkIfUserExistsOrThrow(userId);
         String profileImageId = UUID.randomUUID().toString();
         try {
-            storageService.putObject("point-of-sale-management.appspot.com",
-                    String.format("profile-images/%s/%s", userId, profileImageId), file.getBytes());
+            storageService.putObject("point-of-sale-management.appspot.com", String.format("profile-images/%s/%s", userId, profileImageId), file.getBytes());
         } catch (IOException e) {
             throw new RuntimeException("failed to upload profile image", e);
         }
@@ -321,12 +304,11 @@ public class UserService {
     }
 
     public void uploadUserProfileImage(MultipartFile file) {
-        SecurityUtil.getCurrentUserLogin().flatMap(userRepository::findOneByLogin).ifPresent(user -> {
+        SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLogin).ifPresent(user -> {
             String profileImageId = UUID.randomUUID().toString();
             try {
                 byte[] fileBytes = file.getBytes();
-                storageService.putObject("point-of-sale-management.appspot.com",
-                        String.format("profile-images/%s/%s", user.getId(), profileImageId), fileBytes);
+                storageService.putObject("point-of-sale-management.appspot.com", String.format("profile-images/%s/%s", user.getId(), profileImageId), fileBytes);
                 userRepository.updateProfileImageId(profileImageId, user.getId());
             } catch (IOException e) {
                 throw new RuntimeException("Failed to upload profile image", e);
@@ -335,43 +317,36 @@ public class UserService {
     }
 
     public byte[] getUserProfileImage(Long userId) {
-        var user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("user with id [%s] not found", userId)));
+        var user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(String.format("user with id [%s] not found", userId)));
 
         if (StringUtils.isBlank(user.getProfileImageId())) {
-            throw new ResourceNotFoundException(
-                    String.format("user with id [%s] profile picture image not found", userId));
+            throw new ResourceNotFoundException(String.format("user with id [%s] profile picture image not found", userId));
         }
 
-        byte[] profileImage = storageService.getObject("point-of-sale-management.appspot.com",
-                String.format("profile-images/%s/%s", userId, user.getProfileImageId()));
+        byte[] profileImage = storageService.getObject("point-of-sale-management.appspot.com", String.format("profile-images/%s/%s", userId, user.getProfileImageId()));
         return profileImage;
     }
 
     public byte[] getUserProfileImage() {
-        return SecurityUtil.getCurrentUserLogin().flatMap(userRepository::findOneByLogin).map(user -> {
+        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLogin).map(user -> {
             if (StringUtils.isBlank(user.getProfileImageId())) {
-                throw new ResourceNotFoundException(
-                        String.format("User with id [%s] does not have a profile picture.", user.getId()));
+                throw new ResourceNotFoundException(String.format("User with id [%s] does not have a profile picture.", user.getId()));
             }
 
-            byte[] profileImage = storageService.getObject("point-of-sale-management.appspot.com",
-                    String.format("p" + "rofile-images/%s/%s", user.getId(), user.getProfileImageId()));
+            byte[] profileImage = storageService.getObject("point-of-sale-management.appspot.com", String.format("p" + "rofile-images/%s/%s", user.getId(), user.getProfileImageId()));
 
             return profileImage;
         }).orElseThrow(() -> new ResourceNotFoundException("Current user not found."));
     }
 
     public void deleteUserProfileImage(Long userId) {
-        var user = userRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException(String.format("user with id [%s] not found", userId)));
+        var user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(String.format("user with id [%s] not found", userId)));
 
         if (StringUtils.isBlank(user.getProfileImageId())) {
             throw new ResourceNotFoundException(String.format("user with id [%s] user image not found", userId));
         }
 
-        storageService.deleteObject("point-of-sale-management.appspot.com",
-                String.format("user-images/%s/%s", userId, user.getProfileImageId()));
+        storageService.deleteObject("point-of-sale-management.appspot.com", String.format("user-images/%s/%s", userId, user.getProfileImageId()));
         userRepository.updateProfileImageId(null, userId);
     }
 
@@ -396,8 +371,6 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public SecurityInfoDTO getSecurityInfoFromAuthentication() {
-        return SecurityUtil.getCurrentUserLogin().flatMap(userRepository::findOneByLogin)
-                .map(securityInfoMapper)
-                .orElseThrow(() -> new ResourceNotFoundException("User could not be found"));
+        return SecurityUtils.getCurrentUserLogin().flatMap(userRepository::findOneByLogin).map(securityInfoMapper).orElseThrow(() -> new ResourceNotFoundException("User could not be found"));
     }
 }
