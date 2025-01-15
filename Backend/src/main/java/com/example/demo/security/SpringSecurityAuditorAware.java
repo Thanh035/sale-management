@@ -1,18 +1,20 @@
 package com.example.demo.security;
 
-import java.util.Optional;
-
+import com.example.demo.constants.Constants;
+import com.example.demo.utils.SecurityUtils;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.stereotype.Component;
 
-import com.example.demo.utils.SecurityUtil;
+import java.util.Optional;
 
+/**
+ * Implementation of {@link AuditorAware} based on Spring Security.
+ */
 @Component
 public class SpringSecurityAuditorAware implements AuditorAware<String> {
 
-	@Override
-	public Optional<String> getCurrentAuditor() {
-		return Optional.of(SecurityUtil.getCurrentUserLogin().orElse("system"));
-	}
-
+    @Override
+    public Optional<String> getCurrentAuditor() {
+        return Optional.of(SecurityUtils.getCurrentUserLogin().orElse(Constants.SYSTEM));
+    }
 }

@@ -5,6 +5,7 @@ import com.example.demo.domain.dto.admin.order.OrderDTO;
 import com.example.demo.domain.dto.admin.order.OrderRequestDTO;
 import com.example.demo.domain.dto.admin.order.OrderViewDTO;
 import com.example.demo.services.OrderService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +14,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.net.URISyntaxException;
 import java.util.List;
 

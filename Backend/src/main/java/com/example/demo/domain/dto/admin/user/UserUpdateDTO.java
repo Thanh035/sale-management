@@ -1,8 +1,8 @@
 package com.example.demo.domain.dto.admin.user;
 
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Set;
 

@@ -13,7 +13,7 @@ import { HttpHeaders, HttpResponse } from '@angular/common/http';
 })
 export class RolePermissionsComponent {
 
-  roles: RoleDTO[] | null = null;
+  groups: RoleDTO[] | null = null;
   totalItems = 0;
   itemsPerPage: number = ITEMS_PER_PAGE;
   page!: number;
@@ -85,9 +85,9 @@ export class RolePermissionsComponent {
     return result;
   }
 
-  private onSuccess(roles: RoleDTO[] | null, headers: HttpHeaders): void {
+  private onSuccess(groups: RoleDTO[] | null, headers: HttpHeaders): void {
     this.totalItems = Number(headers.get('X-Total-Count'));
-    this.roles = roles;
+    this.groups = groups;
   }
 
 }

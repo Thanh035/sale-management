@@ -29,23 +29,23 @@
                 </th>
               </tr>
             </thead>
-            <tbody *ngIf="roles">
-              <tr *ngFor="let role of roles; trackBy: trackIdentity">
-                <td>{{ role.groupName }}</td>
+            <tbody *ngIf="groups">
+              <tr *ngFor="let group of groups; trackBy: trackIdentity">
+                <td>{{ group.groupName }}</td>
                 <td>
-                  {{ role.groupCode }}
+                  {{ group.groupCode }}
                 </td>
                 <td>
-                  {{ role.createdDate | amLocale: 'vi' | amTimeAgo  }}
+                  {{ group.createdDate | amLocale: 'vi' | amTimeAgo  }}
                 </td>
                 <td>
-                  {{ role.createdBy }}
+                  {{ group.createdBy }}
                 </td>
               </tr>
             </tbody>
           </table>
 
-          <!-- <div *ngIf="roles">
+          <!-- <div *ngIf="groups">
             <div class="dataTables_length" id="DataTables_Table_0_length">
               Hiển thị:
               <select [(ngModel)]="itemsPerPage" (ngModelChange)="loadAll()" name="DataTables_Table_0_length" aria-controls="DataTables_Table_0" class="custom-select custom-select-sm form-control form-control-sm">
