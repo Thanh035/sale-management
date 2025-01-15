@@ -18,21 +18,21 @@ public class UserDTOMapper implements Function<User, UserDTO> {
     public UserDTO apply(User user) {
         UserDTO dto = new UserDTO();
         BeanUtils.copyProperties(user, dto);
-        dto.setRoles(user.getGroups().stream().map(Group::getCode).collect(Collectors.toSet()));
+        dto.setRoles(user.getGroups().stream().map(Group::getGroupCode).collect(Collectors.toSet()));
         return dto;
     }
 
     public AccountDTO toAccountDTO(User user) {
         AccountDTO dto = new AccountDTO();
         BeanUtils.copyProperties(user, dto);
-        dto.setRoles(user.getGroups().stream().map(Group::getCode).collect(Collectors.toSet()));
+        dto.setRoles(user.getGroups().stream().map(Group::getGroupCode).collect(Collectors.toSet()));
         return dto;
     }
 
     public UserDetailDTO toUserDetailDTO(User user) {
         UserDetailDTO dto = new UserDetailDTO();
         BeanUtils.copyProperties(user, dto);
-        dto.setRoles(user.getGroups().stream().map(Group::getCode).collect(Collectors.toSet()));
+        dto.setRoles(user.getGroups().stream().map(Group::getGroupCode).collect(Collectors.toSet()));
         return dto;
     }
 

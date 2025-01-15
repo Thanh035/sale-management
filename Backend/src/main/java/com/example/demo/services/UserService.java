@@ -9,16 +9,16 @@ import com.example.demo.domain.dto.admin.user.UserCreateDTO;
 import com.example.demo.domain.dto.admin.user.UserDTO;
 import com.example.demo.domain.dto.admin.user.UserDetailDTO;
 import com.example.demo.domain.dto.admin.user.UserUpdateDTO;
+import com.example.demo.domain.entities.Group;
+import com.example.demo.domain.entities.LoginHistory;
+import com.example.demo.domain.entities.User;
 import com.example.demo.exception.DuplicateResourceException;
 import com.example.demo.exception.RequestValidationException;
 import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.mappers.SecurityInfoMapper;
 import com.example.demo.mappers.UserDTOMapper;
-import com.example.demo.domain.entities.LoginHistory;
-import com.example.demo.domain.entities.Group;
-import com.example.demo.domain.entities.User;
-import com.example.demo.repositories.LoginHistoryRepository;
 import com.example.demo.repositories.GroupRepository;
+import com.example.demo.repositories.LoginHistoryRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.utils.RandomUtil;
 import com.example.demo.utils.SecurityUtil;
@@ -79,7 +79,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public Optional<UserDetailDTO> getUserWithRolesById(Long userId) {
         checkIfUserExistsOrThrow(userId);
-        return userRepository.findOneWithRolesById(userId).map(userDTOMapper::toUserDetailDTO);
+        return userRepository.findOneWithGroupsById(userId).map(userDTOMapper::toUserDetailDTO);
     }
 
     @Transactional(readOnly = true)
@@ -91,7 +91,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public List<String> getRoles() {
-        return groupRepository.findAll().stream().map(Group::getCode).collect(Collectors.toList());
+        return groupRepository.findAll().stream().map(Group::getGroupCode).collect(Collectors.toList());
     }
 
     public UserDTO createUser(UserCreateDTO newUserRequest) {
@@ -125,7 +125,7 @@ public class UserService {
             if (updateRequest.getRoles() != null) {
                 Set<Group> managedGroups = user.getGroups();
                 managedGroups.clear();
-                updateRequest.getRoles().stream().map(groupRepository::findOneByCode).filter(Optional::isPresent)
+                updateRequest.getRoles().stream().map(groupRepository::findByGroupName).filter(Optional::isPresent)
                         .map(Optional::get).forEach(managedGroups::add);
             }
 
@@ -185,7 +185,7 @@ public class UserService {
         newUser.setActivationKey(RandomUtil.generateActivationKey());
 
         Set<Group> groups = new HashSet<>();
-        groupRepository.findOneByCode(RolesConstants.USER).ifPresent(groups::add);
+        groupRepository.findByGroupName(RolesConstants.USER).ifPresent(groups::add);
         newUser.setGroups(groups);
         userRepository.save(newUser);
         mailService.sendActivationEmail(newUser);

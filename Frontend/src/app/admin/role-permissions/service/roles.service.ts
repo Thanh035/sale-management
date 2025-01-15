@@ -11,7 +11,7 @@ import { RoleDTO, RoleDetailDTO } from '../role-permission.model';
 })
 export class RolesService {
 
-  private resourceUrl = this.applicationConfigService.getEndpointFor('api/v1.0/admin/roles');
+  private resourceUrl = this.applicationConfigService.getEndpointFor('api/v1.0/admin/groups');
 
   constructor(private http: HttpClient, private applicationConfigService: ApplicationConfigService) { }
 

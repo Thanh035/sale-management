@@ -39,8 +39,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     boolean existsUserById(Long id);
 
-    @EntityGraph(attributePaths = "roles")
-    Optional<User> findOneWithRolesById(Long id);
+    @EntityGraph(attributePaths = "groups")
+    Optional<User> findOneWithGroupsById(Long id);
 
     @Modifying(clearAutomatically = true)
     @Query("UPDATE User c SET c.profileImageId = ?1 WHERE c.id = ?2")

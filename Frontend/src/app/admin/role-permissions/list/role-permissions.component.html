@@ -31,9 +31,9 @@
             </thead>
             <tbody *ngIf="roles">
               <tr *ngFor="let role of roles; trackBy: trackIdentity">
-                <td>{{ role.name }}</td>
+                <td>{{ role.groupName }}</td>
                 <td>
-                  {{ role.code }}
+                  {{ role.groupCode }}
                 </td>
                 <td>
                   {{ role.createdDate | amLocale: 'vi' | amTimeAgo  }}

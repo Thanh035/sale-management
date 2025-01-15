@@ -27,7 +27,7 @@ public class SecurityInfoMapper implements Function<User,SecurityInfoDTO> {
     @Override
     public SecurityInfoDTO apply(User user) {
         SecurityInfoDTO dto = new SecurityInfoDTO();
-        dto.setRoles(user.getGroups().stream().map(Group::getName).collect(Collectors.toSet()));
+        dto.setRoles(user.getGroups().stream().map(Group::getGroupName).collect(Collectors.toSet()));
         if (user.getLoginHistories() != null) {
             List<LoginHistoryDTO> loginHistories = new ArrayList<>();
             user.getLoginHistories().stream().forEach(loginHistory -> {

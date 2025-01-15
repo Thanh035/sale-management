@@ -1,52 +1,46 @@
 package com.example.demo.domain.entities;
 
-import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Getter;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.time.Instant;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
-@Getter
-@Setter
 @Entity
-@EqualsAndHashCode
-@ToString
 @Table(name = "groups")
-public class Group extends AbstractAuditingEntity<Long> implements Serializable {
-
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "group_id")
-	private Long id;
-
-	@NotNull
-	@Size(max = 50)
-	@Column(length = 50)
-	private String name;
-
-	@Size(max = 20)
-	@Column(length = 20)
-	private String code;
-
-	private String note;
-
-//	@JsonIgnore
-//	@ManyToMany
-//	@JoinTable(name = "tbl_role_permission", joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"), inverseJoinColumns = {
-//			@JoinColumn(name = "permission_id", referencedColumnName = "id") })
-//	@BatchSize(size = 20)
-//	private List<Permission> permissions = new ArrayList<>();
+@EntityListeners(AuditingEntityListener.class)
+@JsonIgnoreProperties(value = {"createdBy", "createdDate"}, allowGetters = true)
+public class Group {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
+    @SequenceGenerator(name = "sequenceGenerator")
+    @Column(name = "group_id")
+    private Integer groupId;
+    @NotNull
+    @Size(max = 50)
+    @Column(name = "group_name", length = 50)
+    @Getter
+    private String groupName;
+    @NotNull
+    @Size(max = 50)
+    @Column(name = "group_code", length = 50)
+    @Getter
+    private String groupCode;
+    @Column(name = "note")
+    private String note;
+    @CreatedBy
+    @Getter
+    @Column(name = "created_by", nullable = false, length = 50, updatable = false)
+    private String createdBy;
+    @CreatedDate
+    @Getter
+    @Column(name = "created_date", updatable = false)
+    private Instant createdDate = Instant.now();
 
 }
